@@ -7,9 +7,12 @@ The 2t swordfish method is the meta for both pure fishing experience and the fis
 We'll be fishing in Port Piscarilius, which is the northeastern city in Zeah. Specifically, we'll be on the northwestern coast near the location indicator. 
 
 <div style="text-align:center"><img src="https://i.imgur.com/gIogktb.png" alt='Gear needed' width=400>
+
+A convenient way to get to Port Piscarilius is using the book "Kharedst's memoirs".
+
 ### Inventory and equipment
 
-The only necessary gear to bring is a harpoon and a weapon with a two or three tick attack speed, strictly speaking. However, it's helpful to bring our angler's outfit for increased experience, runes to cast the spell confuse, and the book "Kharedst's memoirs" to get to Port Piscarilius. 
+The only necessary gear to bring is a harpoon and a weapon with a two or three tick attack speed, strictly speaking. However, it's helpful to bring our angler's outfit for increased experience, runes to cast the spell confuse.
 
 <div style="text-align:center"><img src="https://i.imgur.com/2pRl5X3.png" alt='Gear needed' width=400>
 
@@ -55,7 +58,7 @@ This is main part of doing 2t swordfish. Every two ticks, whenever a hitsplat ap
 
 <div style="text-align:center"><img src="https://i.imgur.com/Gwqc6Q4.gif" alt='Gear needed' width=500>
 
-The method works by being flinched for one tick, then interacting with the fishing spot on the skilling tick (ie the tick after the flinch). Since most fishing spots remove your interaction with them after one tick when the skilling tick isn't in the past, there's no need to click off like in 2t teaks. (Note, most fishing spots have one or two ticks which are exceptions to this that allow for afk fishing.)
+The method works by being flinched for a one tick delay, then interacting with the fishing spot on the skilling tick. Since most fishing spots remove your interaction with them after one tick when the skilling tick isn't in the past, there's no need to click off like in 2t teaks. (Note, most fishing spots have one or two ticks which are exceptions to this that allow for afk fishing.)
 
 ## Movement
 
