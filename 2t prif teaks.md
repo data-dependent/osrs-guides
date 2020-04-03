@@ -10,7 +10,6 @@ We will bring along our lumberjack outfit for increased experience and a 2-tick 
 
 <div style="text-align:center"><img src="https://i.imgur.com/VW0YK5P.jpg" alt='Gear needed' width=350>
 
-
 Be sure not to bring a woodcutting cape, as it increases the chance of nests dropping, which provide no experience. It can also be helpful to bring along an item to teleport away when done with woodcutting. The butterfly net and impling jar are to catch passing crystal imps, and the teleport crystal is to get to Prifddinas.
 
 ## Step 1: Aggro the rabbits
@@ -18,6 +17,7 @@ Be sure not to bring a woodcutting cape, as it increases the chance of nests dro
 To aggro the rabbits, we cast wind strike against them. Since the max hit is two and the rabbits have five hitpoints, this will never kill them. Another common choice is to cast confuse or a similar spell, which deals no damage.
 
 <div style="text-align:center"><img src="https://i.imgur.com/NsW6Jyf.gif" alt='Gear needed' width=500>
+It's helpful to set our npc attack options to "hidden" to keep us from accidentally killing the rabbits.
 
 ## Step 2: Every other tick the rabbits
 
@@ -45,7 +45,7 @@ The only convenient method to handle all three configurations is to run out then
 
 ## Step 3: Primary technique
 
-Below we see the primary technique for performing 2t teaks. When we do the method, this part will take up the lion's share of our time.
+Below we see the primary technique for performing 2t teaks. When we do the method, this part will take up the lion's share of our time. [Here is a longer clip](https://streamable.com/rto1c) of doing the method, including movement between trees.
 
 <div style="text-align:center"><img src="https://i.imgur.com/vEALCT2.gif" alt='Gear needed' width=500>
 
