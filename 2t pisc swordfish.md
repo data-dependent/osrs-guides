@@ -1,13 +1,12 @@
 # A guide to 2t swordfish in Piscarilius
 
+The 2t swordfish method is the meta for both pure fishing experience and the fishing pet. The are no requirements besides level 35 fishing to be able to harpoon at tuna and swordfish spots. At level 99, the fishing experience per hour is around 125k with a dragon harpoon and around 140k with a crystal harpoon. 
+
 ## Background
 
 We'll be fishing in Port Piscarilius, which is the northeastern city in Zeah. Specifically, we'll be on the northwestern coast near the location indicator. 
 
 <div style="text-align:center"><img src="https://i.imgur.com/gIogktb.png" alt='Gear needed' width=400>
-
-The are no requirements for this method besides level 35 fishing to be able to harpoon at tuna and swordfish spots. At level 99, the fishing experience per hour is around 125k with a dragon harpoon and around 140k with a crystal harpoon.
-
 ### Inventory and equipment
 
 The only necessary gear to bring is a harpoon and a weapon with a two or three tick attack speed, strictly speaking. However, it's helpful to bring our angler's outfit for increased experience, runes to cast the spell confuse, and the book "Kharedst's memoirs" to get to Port Piscarilius. 
@@ -24,11 +23,16 @@ Since the weapon we brought was a magic shortbow, the attack option needs to be 
 
 There's a few settings on runelite which make the method more comfortable.
 
-<div style="text-align:center"><img src="https://i.imgur.com/dZi3T6g.png" alt='Gear needed' width=300>
+<div style="text-align:center"><img src="https://i.imgur.com/dZi3T6g.png" alt='Gear needed' width=250>
+
 
 Runelite's menu entry swapper plugin makes it possible to left click to fish tuna and swordfish. This is much more convenient than right clicking the fishing spot then selecting the appropriate option. As seen in the following sections, we've also tagged the rats through the NPC Indicator plugin to make finding them easier.
 
 ## Setup
+
+In the section, we will set up the rats to attack us every other tick while we are in front of a fishing spot. [Here is a clip](https://i.imgur.com/TEygxQb.mp4) of full set up.
+
+### Aggroing the rats
 
 We use the spell Confuse to aggro the rats. Any combat spell could kill the rats since they have only two hitpoints. The two rats which tend to be in those areas are the best to aggro; other rats have wander areas which we may sometimes leave.
 
@@ -38,9 +42,8 @@ We use the spell Confuse to aggro the rats. Any combat spell could kill the rats
 
 Ultimately, we want the rats to be attacking us every other tick. To make this possible in a convenient way, we first make the rats horizontal. We run southward away from the coast, then run back in a way that avoids unobstructing the tile that the rat closest to us ends up on.
 
-There's exactly one possible configuration of rats (which typically won't occur in practice) that will not become horizontal when clicking in this way: however, if this running away then back to the coast doesn't work the first time, it will the second time. <!-- Alternatively, to avoid any problems, click two tiles west on the way back to the coast when the rats start more eastward. -->
-
 <div style="text-align:center"><img src="https://i.imgur.com/gHLDgJN.gif" alt='Gear needed' width=500>
+There's exactly one possible configuration of rats (which typically won't occur in practice) that will not become horizontal when clicking in this way: however, if this running away then back to the coast doesn't work the first time, it will the second time. <!-- Alternatively, to avoid any problems, click two tiles west on the way back to the coast when the rats start more eastward. -->
 
 With the rats horizontal, we can now easily get them attacking us every other tick. On the tick when a hitsplat appears on our character, we will click the first highlighted tile. (Note, this is the only click during rat setup where our timing matters.) Then, we click the next highlighted tile to move the rabbits to the coast. Be sure to turn run off now.
 
@@ -62,6 +65,6 @@ When our fishing spot moves westward, we can "pull" the rats to the new fishing 
 
 <div style="text-align:center"><img src="https://i.imgur.com/JUkkVEk.gif" alt='Gear needed' width=500>
 
-When our fishing spot moves eastward, just clicking near the fishing spot would path us through a rat, so we'd be "pushing" the rats. This can mess up their positioning, so instead we take a diagonal step to "pull" them. Again, we click one tile away from the fishing spot and then the fishing spot itself on the tick when a hitsplat appears on our character after arriving.
+When our fishing spot moves eastward, just clicking near the fishing spot would path us through a rat, so we'd be "pushing" the rats. This can mess up their positioning, so instead we take a diagonal step to "pull" them. Again, we click one tile away from the fishing spot and then the fishing spot itself on the tick when a hitsplat first appears on our character after arriving.
 
 <div style="text-align:center"><img src="https://i.imgur.com/hOHV05F.gif" alt='Gear needed' width=500>
