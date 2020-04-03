@@ -46,6 +46,8 @@ We use the spell Confuse to aggro the rats. Any combat spell could kill the rats
 Ultimately, we want the rats to be attacking us every other tick. To make this possible in a convenient way, we first make the rats horizontal. We run southward away from the coast, then run back in a way that avoids unobstructing the tile that the rat closest to us ends up on.
 
 <div style="text-align:center"><img src="https://i.imgur.com/gHLDgJN.gif" alt='Gear needed' width=500>
+
+
 There's exactly one possible configuration of rats (which typically won't occur in practice) that will not become horizontal when clicking in this way: however, if this running away then back to the coast doesn't work the first time, it will the second time. 
 
 With the rats horizontal, we can now easily get them attacking us every other tick. On the tick when a hitsplat appears on our character, we will click the first highlighted tile. (Note, this is the only click during rat setup where our timing matters.) Then, we click the next highlighted tile to move the rabbits to the coast. Be sure to turn run off now.
