@@ -48,6 +48,8 @@ Ultimately, we want the rats to be attacking us every other tick. To make this p
 <div style="text-align:center"><img src="https://i.imgur.com/gHLDgJN.gif" alt='Gear needed' width=500>
 There's exactly one possible configuration of rats (which typically won't occur in practice) that will not become horizontal when clicking in this way: however, if this running away then back to the coast doesn't work the first time, it will the second time. <!-- Alternatively, to avoid any problems, click two tiles west on the way back to the coast when the rats start more eastward. -->
 
+
+
 With the rats horizontal, we can now easily get them attacking us every other tick. On the tick when a hitsplat appears on our character, we will click the first highlighted tile. (Note, this is the only click during rat setup where our timing matters.) Then, we click the next highlighted tile to move the rabbits to the coast. Be sure to turn run off now.
 
 <div style="text-align:center"><img src="https://i.imgur.com/fvvpKPR.gif" alt='Gear needed' width=500>
@@ -67,6 +69,7 @@ Movement must happen after setting up the rats and whenever the fishing spot mov
 When our fishing spot moves westward, we can "pull" the rats to the new fishing spot. We click one tile away from the fishing spot, then click the fishing spot on the tick of the first hitsplat after arriving to the tile. (Clicking one tile away like this saves us a few ticks compared to just clicking the fishing spot or clicking the tile besides the fishing spot.)
 
 <div style="text-align:center"><img src="https://i.imgur.com/JUkkVEk.gif" alt='Gear needed' width=500>
+
 
 When our fishing spot moves eastward, just clicking near the fishing spot would path us through a rat, so we'd be "pushing" the rats. This can mess up their positioning, so instead we take a diagonal step to "pull" them. Again, we click one tile away from the fishing spot and then the fishing spot itself on the tick when a hitsplat first appears on our character after arriving.
 
