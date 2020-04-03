@@ -6,11 +6,12 @@ This method to move between trees is different than heboxjonge's method. Unlike 
 
 ## Step 0: Get geared
 
-We will bring along our lumberjack outfit for increased experience and a 2-tick or 3-tick weapon to autoretaliate with. A common choice is magic shortbow or hunter's crossbow, both without ammo, but cool people use darts.
+We will bring along our lumberjack outfit for increased experience and a 2-tick or 3-tick weapon to autoretaliate with. A common choice is magic shortbow or hunter's crossbow, both without ammo, but cool people use darts. Bring an axe to woodcut, preferably a dragon, infernal, or crystal axe. 
 
-<div style="text-align:center"><img src="https://i.imgur.com/fYfSRg5.png" alt='Gear needed' width=200>
+<div style="text-align:center"><img src="https://i.imgur.com/VW0YK5P.jpg" alt='Gear needed' width=350>
 
-Be sure not to bring a woodcutting cape, as it increases the chance of nests dropping, which provide no experience. It can also be helpful to bring along an item to teleport away when done with woodcutting. 
+
+Be sure not to bring a woodcutting cape, as it increases the chance of nests dropping, which provide no experience. It can also be helpful to bring along an item to teleport away when done with woodcutting. The butterfly net and impling jar are to catch passing crystal imps, and the teleport crystal is to get to Prifddinas.
 
 ## Step 1: Aggro the rabbits
 
@@ -20,19 +21,27 @@ To aggro the rabbits, we cast wind strike against them. Since the max hit is two
 
 ## Step 2: Every other tick the rabbits
 
-At this point, we're almost ready to start woodcutting, but we first need to set up the rabbits. Here there's two cases, depending on whether the rabbits are stacked or not.
+At this point, we're almost ready to start woodcutting, but we first need to set up the rabbits. Here there's three cases, depending on the position of the rabbits.
 
-### i. Not stacked rabbits
+### i. Adjacent rabbits
 
-<div style="text-align:center"><img src="https://i.imgur.com/tRCij3S.gif" alt='Gear needed' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/JjuC5Iu.gif" alt='Gear needed' width=500>
 
 We click on an empty tile (among the highlighted tiles) on a hitsplat tick; on the next tick, we click to move back to between the eastern trees.
 
 ### ii. Stacked rabbits
 
-<div style="text-align:center"><img src="https://i.imgur.com/lRJSVoX.gif" alt='Gear needed' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/Lrzo8cM.gif" alt='Gear needed' width=500>
 
-We click the tile in front of the western tree; then, we click the tile between the eastern trees on a hitsplat tick. <!-- what if the rabbits are both blocked, one on north and one on south tile? -->
+We click the tile in front of the western tree; then, we click the tile between the eastern trees on a hitsplat tick.
+
+### iii. Safespotted rabbits
+
+It's extremely rare but possible that both rabbits become safespotted, stuck behind one of the eastern trees. There's three configurations here: Both are north, both are south, and one is north while one is south. Below we show how to handle these.
+
+<div style="text-align:center"><img src="https://i.imgur.com/wGEYRl9.gif" alt='Method for safespotted rabbits' width=500>
+
+The only convenient method to handle all three configurations is to run out then run back, which converts the rabbits to being adjacent, which was handled in case i.
 
 ## Step 3: Primary technique
 
