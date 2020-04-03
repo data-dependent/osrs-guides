@@ -1,6 +1,6 @@
 # 2t Prifddinas Teaks Guide
 
-This guide will fully explain how to perform the 2t teaks method in prifddinas. The method is almost the same as 2t teaks on ape atoll, but here we accrue crystal shards and the movement between trees is more complicated. Note that the quest Song of the Elves is needed to access Prifddinas .
+This guide will fully explain how to perform the 2t teaks method in Prifddinas. The method is almost the same as 2t teaks on ape atoll, but here we accrue crystal shards and the movement between trees is more complicated. Note that the quest Song of the Elves is needed to access Prifddinas .
 
 This method to move between trees is different than heboxjonge's method. Unlike his, this method works for 3t weapons with ammo, works for 2t weapons, and doesn't change the rhythm. This method also saves 2 ticks with a godly reaction time, while his doesn't.
 
