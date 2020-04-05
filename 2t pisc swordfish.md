@@ -59,7 +59,7 @@ With the rats horizontal, we can now easily get them attacking us every other ti
 
 ## Main method
 
-This is main part of doing 2t swordfish. Every two ticks, whenever a hitsplat appears on your character, we click on the fishing spot. The tick in between can be used for anything besides interacting with an object, item, npc, or player. Commonly, the tick is used to idle, drop fish, or fletch darts. Be sure to have auto-retaliate on. 
+This is main part of doing 2t swordfish. Every two ticks, whenever a hitsplat appears on your character, we click on the fishing spot. The tick in between can be used for anything besides interacting with an object, item, npc, or player. Commonly, the tick is used to idle, drop fish, or fletch darts. Be sure to have auto-retaliate on. The timing to spec without missing ticks is shown in the [clip here](https://streamable.com/4w6el).
 
 <div style="text-align:center"><img src="https://i.imgur.com/Gwqc6Q4.gif" alt='Main method' width=500>
 
