@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-​	Few of the ideas presented here are due to the writer. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Julia, Nechs, Tannerdino, and all of The Summit for their explanations and helpful discussions. The aforementioned people are always great to talk to, but, in particular, data_dependent#3975 always has his DMs open to chat.
+Few of the ideas presented here are due to the writer. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Julia, Nechs, Tannerdino, and all of The Summit for their explanations and helpful discussions. The aforementioned people are always great to talk to, but, in particular, data_dependent#3975 always has his DMs open to chat.
 
 ##### Table of Contents
 
