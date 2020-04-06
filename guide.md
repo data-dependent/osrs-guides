@@ -11,8 +11,6 @@ Few of the ideas presented here are due to the writer. Thanks to Bea5, Drew, Fra
 
 [Stalls](#tick-manipulation-iii-stalls): Overview of action blockers in skilling
 
-[The queue](#tick-manipulation-iv-the-queue): Overview of use of queue for skilling
-
 [Movement and pathing](#tick-manipulation-v-movement-and-pathing): Overview of relevant movement mechanics during skilling
 
 ## Tick Manipulation I: Ticks via Henke's Model
