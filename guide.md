@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writer. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Julia, Nechs, Port Khazard, Tannerdino, and all of The Summit for their explanations and helpful discussions. The aforementioned people are always great to talk to, but, in particular, data_dependent#3975 always has his DMs open to chat.
+Few of the ideas presented here are due to the writer. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Julia, Jukebox Romeo, Nechs, Port Khazard, Tannerdino, and all of The Summit for their explanations and helpful discussions. The aforementioned people are always great to talk to, but, in particular, data_dependent#3975 always has his DMs open to chat.
 
 ##### Table of Contents
 
@@ -83,6 +83,7 @@ The zamorak brew click is processed in client input: first our current hitpoints
 The situation is different if we perform the clicks in the opposite order, which we see in the clip below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/HitPpiN.gif" alt='Locator orb then zammy brew' width=500>
+
 The locator orb click is processed in client input: first our current hitpoints (11) is checked and damage (10) is calculated, then a hitsplat of 10 is put in our queue. Then, the zamorak brew click is processed in client input: first our current hitpoints (11) is checked and and damage (1) is calculated, and we immediately incur that 1 damage. Later, during our turn when the queue evaluates, we incur the 10 damage from the locator orb and die. Our death is put into our queue to be evaluated on the following tick.
 
 Weak commands in the queue are used commonly in skilling. Skilling actions not based on interactions tend happen in the queue. For example, making herb tar uses a weak command in our queue: in client input on the tick after we click a low leveled herb onto swamp tar, the skilling tick will be set if the skilling timer is nonpositive, then a command to complete the make on the skilling tick will be placed as a weak command in the queue. Recall that we can quickly test making herb tar is indeed a weak command since rearranging our inventory cancels the action.
@@ -95,11 +96,11 @@ During the category timers, commands which are to be executed periodically are e
 
 #### The area queue
 
-The area queue is similar but separate from the queue. It still evaluates in a first in, first out basis, but it only takes in commands related to area effects based on standing on particular tiles. A standard example is area tiles updating overlays in the wilderness, such as the wilderness level and multi combat indicator. When an interface is open, movement is blocked on area tiles: therefore a good test for whether a tile is an area tile is to walk across it with our interface open. Below, we see an example of blocking the wilderness level indicator from updating.
+The area queue is similar but separate from the queue. It still evaluates in a first in, first out basis, but it only takes in commands related to area effects based on standing on particular tiles. A standard example of the area queue can be seen in the wilderness. certain tiles, called area tiles, lead to overlays such as the wilderness level and multi combat indicator updating in the wilderness when we're on them. Note, when an interface is open, movement is blocked on area tiles: therefore a good test for whether a tile is an area tile is to walk across it with our interface open. Below, we see an example of blocking the wilderness level indicator from updating.
 
 <div style="text-align:center"><img src="https://i.imgur.com/fly1kmc.gif" alt='Teleporting in 31 wildy' width=500>
 
-On some tick, say Tick 1, near the end of our turn, we move to leave level 31 wilderness and reach a tile that's in level 30 wilderness. On Tick 2, our click on our glory amulet is processed and we teleport out of the wilderness. Notice that our overlay never was updated to level 30, since our area queue was never passed.
+On some tick, say Tick 1, near the end of our turn, we move to leave level 31 wilderness and reach a tile that's in level 30 wilderness. On Tick 2, our click on our glory amulet is processed and we start teleporting out of the wilderness. Notice that our overlay never was updated to level 30, since our area queue never ran.
 
 #### Interactions with objects/items and npcs/players
 
@@ -136,6 +137,7 @@ Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the ski
 The skilling tick is just a number, so it doesn't know what kind of action set the skilling tick. In the iron mining example, the skilling tick both got set from an iron rock and was used to mine an iron rock; however, this consistency was not needed. We can also set the skilling tick using one action and then complete a distinct action during the skilling tick. This strategy is behind almost every optimal skilling method in the game. A first example of this is from setting the skilling timer using woodcutting (which is 4 ticks) then completing a barbarian fishing action (which is by default 5 ticks), as shown in the clip below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/FL2K5q7.gif" alt='Tree fishing' width=500>
+
 In doing this method, we click on the tree on the same tick as the roll from fishing; this makes us interact with the tree on the next tick when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School, before more ways to set the skilling tick were known.
 
 Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. On the same tick as we attack, our skilling timer gets to set to our weapon attack speed minus one. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action, and we can use it to speed up fishing even further.
@@ -151,6 +153,7 @@ A major breakthrough in skilling occurred when the community found inventory ite
 An example of 3t skilling with barbarian fishing is below, where we use a knife on a teak log rather than an herb on swamp tar, although these are essentially equivalent from the perspective of the skilling tick.
 
 <div style="text-align:center"><img src="https://i.imgur.com/pAPlYsy.gif" alt='Barbarian fishing' width=500>
+
 On the first tick of the method, which we call Tick 0, we click the knife onto the log. On Tick 1, this click is processed and our skilling timer is set to 2 during client input. On Tick 2, we start interacting with the barbarian fishing spot. On Tick 3, the skilling timer goes off and so we get a roll. This rhythm repeats: notice on Tick 4 that we interrupted our fishing with a knife-log to set the skilling timer using the knife log rather than the fishing spot.
 
 The knife-log used above set the skilling timer after the skilling timer has gone off. Most actions which can change the skilling tick similarly have this _after the skilling timer has gone off_ condition. One way to make sense of this is through an example: while interacting with a fishing spot every tick, the skilling tick change condition is passed every tick, so to make getting rolls possible, the skilling tick change must only happen _after_ the roll, which occurs on the skilling tick. However, the skilling timer is also delayed when we knife-log _on_ the skilling tick. This means that unlike woodcutting, fishing, or mining where interactions check if the skilling timer is _negative_ before setting the skilling tick, these actions check if the skilling timer is _nonpositive_ before setting the skilling tick. Celastrus bark has the same nonpositive behavior. Another example of unusual behavior can be seen in snow gathering: there, the skilling timer is delayed by three whenever the skilling timer is less than two.
@@ -176,8 +179,6 @@ A cleverly timed second karambwan eat can be put into the 2.5t method to make sk
 Here's the method shown for 2.33t willows. The method is called that because we get 3 rolls every 7 ticks, making the average number of ticks per roll equal to 2 1/3.
 
 <div style="text-align:center"><img src='https://i.imgur.com/Nw2M8ty.gif' src="https://i.imgur.com/dG0kl78.gif" alt="Port Khazard's 2.33t method" width=500>
-
-
 On Tick 1, we knife-log to set the skilling timer to 2. Then on Tick 3, we start interacting with the tree and get a roll since the skilling timer goes off. So far, this method is equivalent to 3t fishing. Now, on Tick 4, our skilling timer begins as -1, but we eat a karambwan which delays our skilling timer to -1+2=1, and we start interacting with the tree. On Tick 5, the skilling timer goes off and so we get a roll. At this point, this method is equivalent to 2.5t fishing. On Tick 6, we stop interacting with the tree by clicking the ground. This prevents our skilling timer from being set through the tree. On tick 7, our skilling timer begins as -2, but we eat a karambwan which delays our skilling timer to -2+2=0 and then we interact with the tree, which gives a log roll. 
 
 ### Flinching
@@ -202,9 +203,9 @@ In this section, we'll review and collate the specialized mechanics which were i
 
 The skilling timer delay can happen either after the action or on the action. Fishing, mining, and woodcutting actions happen on the skilling tick, and then the next interaction (while the skilling timer is negative) sets the skilling timer. However, combat and firemaking actions happen when the skilling timer is nonpositive, and the skilling timer delay happens on the same tick as the action. This difference is intrinsically notable but can also be combined to produce a method like PVP world 3t fishing, shown previously.
 
-Inventory actions like making herb tar, wood stocks (via knife-logging), kebbit claws, or battlestaves (via celastrus bark) don't complete when we start them on the skilling tick. The check to delay their skilling timer is whether the skilling timer is _nonpositive_. This is unlike fishing, mining, or woodcutting, where the check to delay their skilling timer is whether the skilling timer is _negative_.
+Inventory actions like making herb tar, wood stocks (via knife-logging), kebbit claws, or battlestaves (via celastrus bark) don't complete when we start them on the skilling tick. This is because the check to delay their skilling timer is whether the skilling timer is _nonpositive_. This is unlike fishing, mining, or woodcutting, where the check to delay their skilling timer is whether the skilling timer is _negative_.
 
-The first interaction can have different behavior than later interactions. We saw this with barbarian fishing, where we cannot get rolls during the first interaction with a fishing spot, even if the first interaction is during the skilling tick. Other examples of this behavior appear at fly fishing, pike fishing, and the boulder mining in volcanic mine.
+The first interaction can have different behavior than later interactions. We saw this with barbarian fishing, where we cannot get rolls during the first interaction with a fishing spot, even if the first interaction is during the skilling tick. Other examples of this behavior appear at fly fishing, pike fishing, and boulder mining in volcanic mine.
 
 In fishing, sometimes when the skilling timer is nonnegative we are forced to stop interacting with the fishing spot after one tick. We saw this during 2t swordfish, where this mechanic made us not need to click off the fishing spot. Barbarian fishing, fly fishing, pike fishing do not have this mechanic at all, while lava eel fishing has a variant of it.
 
@@ -216,7 +217,7 @@ This section has focused on the skilling tick, but there are other "named" ticks
 
 When our character is stalled, our client input and our turn is completely blocked. Our timers don't go off, our queue doesn't evaluate, we can't interact with anything, we can't move, and no client input is accepted. Stalls appear often during skilling, sometimes to block increased experience rates and sometimes to improve experience rates.
 
-There are of course immediate examples of unhelpful stalls. Agility obstacles stall our character while we cross them. This means that no amount of ingenuity will ever speed up crossing an obstacle, as we're blocked during crossing. Another example is picking up a box trap, which produces a three tick stall. Being stalled here means that a trap can be reset in at fewest three ticks. Since it's structurally not possible to lay a trap on the tick the stall ends, the actual best possible duration of a trap reset is four ticks, which can be achieved.
+There are of course immediate examples of unhelpful stalls. Agility obstacles stall our character while we cross them. This means that no amount of ingenuity will ever speed up crossing an obstacle, as we're blocked during crossing. Another example is picking up a box trap, which produces a three tick stall. Being stalled here means that a trap can be reset in at fewest three ticks, which is only possible if we can set up a box trap on the turn that our stall ends. However, this isn't possible, so the fastest a trap can be reset in practice is in four ticks.
 
 Another example where a stall slows us down but an understanding of mechanics saves us a tick compared to a naïve method is below, where our bank interface opens on the same tick that a stall ends.
 
