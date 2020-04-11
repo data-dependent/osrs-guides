@@ -324,6 +324,7 @@ This stall can be used to help us by giving up to two rolls on a skilling tick, 
 
 <div style="text-align:center"><img src="https://i.imgur.com/LoHe2Ae.gif" alt='fossil island 1.5t teaks' width=500>
 
+Below, we describe the actions shown in clip as text.
  - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock. Next in client input, we path to move, which deletes the teak stock command. During our turn, in movement, we move.
  - **Tick 2**: In client input, we start interacting the tree. During our turn, in interaction with objects, a stall starts.
  - **Tick 3**: During our turn, the stall ends. Later during our turn, in interaction with objects, we get a roll for a log.
