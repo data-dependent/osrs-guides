@@ -1,4 +1,4 @@
-# 4t Trap Resetting With Celastrus Bark
+# Trap Resetting
 
 This purpose of this guide is to explain optimal trap resetting in a way that makes clear the underlying mechanics. The method explained here can be used for any kind of chinchompas, but we will set up five non-adjacent traps as if we were hunting red chinchompas.
 
