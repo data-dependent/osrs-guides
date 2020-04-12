@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Julia, Jukebox Romeo, Nechs, Port Khazard, Tannerdino, and all of The Summit for their explanations and helpful discussions.
+Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to data_dependent#3750 or Port Khazard#2280 to chat about the contents of this guide.
 
 ### Table of Contents
 
@@ -77,9 +77,9 @@ An interesting way to take advantage of the ordering of client input and the tur
 
 Below, we write out the actions that are occurring on the server, in terms of Henke's model.
 
- - **Tick 1**: During our character's turn, both move from under KQ and attack KQ.
- - **Tick 2**: During our client input, move to underneath KQ via mithril seeds.
- - **Tick 3**: During our character's turn, pick the flowers.
+ - **Tick 1**: During our character's turn, we both move from under KQ and attack KQ.
+ - **Tick 2**: During our client input, we move to underneath KQ via mithril seeds.
+ - **Tick 3**: During our character's turn, we pick the flowers.
 
 Our character is never in range of KQ during one of her turns, since her turn on **Tick 1** is before our actions and her turn on **Tick 2** is after our action. 
 
@@ -89,13 +89,13 @@ Within each turn, the terms which appear (such as 'timer' and 'queue ') are cate
 
 #### Stalls
 
-When our character is stalled, our client input and our turn is completely blocked: our timers don't go off, our queue doesn't evaluate, we can't interact with anything, we can't move, and no client input is accepted. An example of a stall comes from teleporting. When we click a teleport in the normal spellbook, a stall starts in client input on the next tick. The stall ends four ticks later, when our coordinates change to our destination.
+When our character is stalled, our client input and our turn is completely blocked: our timers don't go off, our queue doesn't evaluate, we can't interact with anything, we can't move, and no client input is accepted. An example of a stall comes from teleporting. When we click a teleport in the normal spellbook, a stall starts in client input on the next tick. The stall ends four ticks later, when our coordinates change to our destination. We'll see interesting skilling examples of stalls in the [**Stalls**](#tick-manipulation-iii-stalls) section.
 
 #### The queue
 
 The queue is a driver of much behavior in game. In this section, we'll first focus on commands unrelated to skilling to initially develop our understanding. Commands in the queue evaluate so that the first that come in are the first that come out. 
 
-A basic example of a queued command is hitsplats. On a turn that a player or npc interacts with an enemy to attack, a command to deal damage is put into the enemy's queue, to be evaluated the next time the enemy has a turn. Notice the asymmetry in this example due to the turn ordering: npcs deal damage to players on the same tick they attack, whereas players deal damage to npcs on the tick after they attack. This can be seen by looking carefully at Henke's model: [this](https://i.imgur.com/BRUE6wn.png) is what happens when the npc attacks, and [this](https://i.imgur.com/i3g7kXw.png) is what happens when the player attacks. Since the player's turn is late in a tick, when the player attacks, the npcs next turn will be on the following tick.
+A basic example of a queued command is hitsplats. On a turn that a player or npc interacts with an enemy to attack, a command to deal damage is put into the enemy's queue, to be evaluated the next time the enemy has a turn. Notice the asymmetry in this example due to the turn ordering: npcs deal damage to players on the same tick they attack, whereas players deal damage to npcs on the tick after they attack. This can be seen by looking carefully at Henke's model: [this](https://i.imgur.com/BRUE6wn.png) is what happens when the npc attacks, and [this](https://i.imgur.com/i3g7kXw.png) is what happens when the player attacks. Since the player's turn is late within a tick, when the player attacks, the npcs next turn will be on the following tick.
 
 A clear illustration of the position of the queue as being in our turn is provided by trying to kill ourselves with a locator orb and a zamorak brew. Both of these do damage based on our hitpoints at the moment our click on them is processed; however, zamorak brews do their damage in client input, while locator orbs queue their damage. At 11 hitpoints, if we click on a zamorak brew then a locator orb on the same tick, the following clip happens.
 
@@ -104,13 +104,13 @@ A clear illustration of the position of the queue as being in our turn is provid
 Below we provide an alternative view of the clip by writing out what's occurring on the server in text. All of the actions are executed within one tick.
 
 During client input:
- - Zammy brew checks current hp (11), and damage (1) is calculated
- - Zammy brew deals 1 damage
- - Locator orb checks current hp (11-1=10), and damage (9) is calculated
- - Locator orb sends 9 damage to queue
+ - Zammy brew checks current hp (11), and damage (1) is calculated,
+ - Zammy brew deals 1 damage,
+ - Locator orb checks current hp (11-1=10), and damage (9) is calculated, then
+ - Locator orb sends 9 damage to queue.
 
 During the queue on our turn:
- - Locator orb deals 9 damage
+ - Locator orb deals 9 damage.
 
 The situation is different if we perform the clicks in the opposite order, which we see in the clip below.
 
@@ -119,19 +119,19 @@ The situation is different if we perform the clicks in the opposite order, which
 Below, we again provide an alternative view of the gif by writing out what's occurring on the server in text. After our health hits zero, our death is put into our queue to be evaluated on the next tick.
 
 During client input:
- - Locator orb checks current hp (11), and damage (10) is calculated
- - Locator orb sends 10 damage command to our queue
- - Zammy brew checks current hp (11), and damage (1) is calculated
- - Zammy brew deals 1 damage
+ - Locator orb checks current hp (11), and damage (10) is calculated,
+ - Locator orb sends 10 damage command to our queue,
+ - Zammy brew checks current hp (11), and damage (1) is calculated, then
+ - Zammy brew deals 1 damage.
 
 During the queue on our turn:
- - Locator orb deals 10 damage, and our health hits 0
+ - Locator orb deals 10 damage, and our health hits 0.
 
-There are three types of commands: weak, normal, and strong. Weak commands get deleted by any actions that interrupts. Since having a strong command in our queue will interrupt us every tick, weak commands get deleted when there is a strong command queued. Note that interfaces also get closed by interruptions, which is written earlier than the queue in Henke's model. An example of a command being deleted appears often in wintertodt. Most fletches there are weak commands, while the damage is a strong command. Almost all client input also interrupts: a good quick test for whether a command is weak in the queue is whether rearranging items in our inventory deletes it.
+There are three types of commands: weak, normal, and strong. Weak commands get deleted by any actions that interrupts. Since having a strong command in our queue will interrupt us every tick, weak commands get deleted when there is a strong command queued. Note that interfaces also get closed by interruptions, which is written in Henke's model, earlier than the queue. An example of a command being deleted appears often in wintertodt. Most fletches there are weak commands, while the damage is a strong command. Almost all client input also interrupts: a good quick test for whether a command is weak in the queue is whether rearranging items in our inventory deletes it.
 
 We now discuss the use of the queue in skilling. Weak commands are used most commonly in skilling.
 
-Skilling actions not based on interactions tend happen in the queue. For example, making herb tar uses a weak command in our queue: in client input on the tick after we click a low leveled herb onto swamp tar, the skilling tick will be set if the skilling timer is nonpositive, then a command to complete the make on the skilling tick will be placed as a weak command in our queue. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action.
+Skilling actions not based on interactions tend to happen in the queue. For example, making herb tar uses a weak command in our queue: in client input on the tick after we click a low leveled herb onto swamp tar, the skilling tick will be set if the skilling timer is nonpositive, then a command to complete the make on the skilling tick will be placed as a weak command in our queue. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action.
 
 The queue is also used for repetitive actions in skilling, such as in fletching, potion making, cooking, wintertodt brazier feeding, smithing, and crafting. For most of these, the first action occurs in client input if the first action happens on the tick after the click, then later actions occur from the queue. In all of these examples, the commands are weak.
 
@@ -179,11 +179,11 @@ Notice that the first raw beef is cooked before the next raw beef begins to be p
 
 Most tick manipulation in skilling amounts to carefully controlling the so-called skilling tick. There's two relevant variables for this: One is a `global tick counter` that starts at 0 on a server reboot and increments by one every tick before any player's client input and another is a player-specific variable called the `skilling tick` that specifies a value of the global tick counter where a skilling action can occur.
 
-Sometimes people refer to the skilling tick minus the global tick counter as the _skilling timer_, which can be conceptually convenient since it counts down by one every tick and the skilling action occurs when the skilling timer "goes off" and hits 0. We will refer to the skilling timer most of the times that we mention setting the value of the skilling tick: for convenience, we sometimes write that we are delaying the skilling timer by _k+1_ in place of writing that we are setting the skilling timer to _k_. This is helpful because there are _k+1_ ticks between when the timer is set and when it goes off.
+Sometimes people refer to the skilling tick minus the global tick counter as the _skilling timer_, which can be conceptually convenient since it lets us not be explicit about the value of the global tick counter. The skilling timer counts down by one every tick and the skilling action occurs when the skilling timer "goes off" and hits 0. We will refer to the skilling timer most of the times that we mention setting the value of the skilling tick: for convenience, we sometimes write that we are delaying the skilling timer by _k+1_ in place of writing that we are setting the skilling timer to _k_. This is helpful because there are _k+1_ ticks between when the timer is set and when it goes off; for example, harpoon fishing a shark takes 6 ticks, but only sets the skilling timer to 5 on the first interaction. 
 
 In most skilling examples, which skilling action occurs when the skilling timer goes off is determined through what we're interacting with. We can only interact with one entity (object, item, npc, or player) at a time. 
 
-A first example of the use of the skilling tick can be found in woodcutting, which standardly is a 4 tick action. Let's set the stage: suppose that the global tick counter is 998 and the skilling tick is 900. This means in part that it's been 98 ticks since we've completed our last skilling action. On global tick 998, let's say we click a reachable tree while there's one tile between our character and the tree. Then, on global tick 999, our click is processed in client input where our interaction is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. On global tick 1000, during our turn, we interact with the tree, and, since our skilling tick is less than the global tick counter, our skilling tick is set to 1003. (Put differently, this sets the skilling timer to 3, or delays the skilling timer by 4.) On global ticks 1001 and 1002, we interact with the tree during our turn largely with no effect. On global tick 1003, which is the value of the skilling tick, our interaction with the tree during our turn produces a roll. If the roll succeeds, we get a log and there's a possibility of the tree falling.
+A first example of the use of the skilling tick can be found in woodcutting, which standardly is a 4 tick action. Let's set the stage: suppose that the global tick counter is 998 and the skilling tick is 900. This means in part that it's been 98 ticks since we've completed our last skilling action. On global tick 998, let's say we click a reachable tree while there's one tile between our character and the tree. Then, on global tick 999, our click is processed in client input where our interaction entity is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. On global tick 1000, during our turn, we interact with the tree, and, since our skilling tick is less than the global tick counter, our skilling tick is set to 1003. (Put differently, this sets the skilling timer to 3, or delays the skilling timer by 4.) On global ticks 1001 and 1002, we interact with the tree during our turn largely with no effect. On global tick 1003, which is the value of the skilling tick, our interaction with the tree during our turn produces a roll. If the roll succeeds, we get a log and there's a possibility of the tree falling.
 
 ### Early examples
 
@@ -191,15 +191,21 @@ While mining, we roll for an ore against any rock that we're interacting with du
 
 <div style="text-align:center"><img src="https://i.imgur.com/AxUdwnW.gif" alt="Bea's mining guild iron" width=500>
 
-Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the skilling timer by two ticks instead of the usual three ticks. We control for this by always moving to another rock after two ticks: when our pickaxe delays our skilling timer by two ticks, we move to an undepleted rock to set the skilling tick again; when our pickaxe delays our skilling timer by three ticks, we deplete the rock we just moved to, and then move back to the old rock to set the skilling tick again. We also drop ore in client input before interacting with a rock to keep space in our inventory.
+Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the skilling timer by two ticks instead of the usual three ticks. We control for this by always moving to another rock after two ticks: when our pickaxe delays our skilling timer by two ticks, this moves us to an undepleted rock to set the skilling tick again; when our pickaxe delays our skilling timer by three ticks, this means we depleted the rock we just moved to, and we then move back to the old rock to set the skilling tick again. We also drop ore in client input before starting to interact with a rock to keep space in our inventory.
 
 The skilling tick is just a number, so it doesn't know what kind of action set the skilling tick. In the iron mining example, the skilling tick both got set from an iron rock and was used to mine an iron rock; however, this consistency was not needed. We can also set the skilling tick using one action and then complete a distinct action during the skilling tick. This strategy is behind almost every optimal skilling method in the game. A first example of this is from setting the skilling timer using woodcutting (which is 4 ticks) then completing a barbarian fishing action (which is by default 5 ticks), as shown in the clip below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/FL2K5q7.gif" alt='Tree fishing' width=500>
 
-In doing this method, we click on the tree on the same tick as the roll from fishing: on the next tick, this makes us interact with the tree when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School, before more ways to set the skilling tick were known.
+Below we describe in text the actions in the gif.
+-  **Tick 1**: The skilling timer decrements to -1. In client input, we start interacting with the tree. This sets the skilling timer to 3.
+-  **Tick 2**: The skilling timer decrements to 2. In client input, we start interacting with the fishing spot.
+-  **Tick 3**: The skilling timer decrements to 1. 
+-  **Tick 4**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
-Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. On the same tick as we attack, our skilling timer gets to set to our weapon attack speed minus one. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action, and we can use it to speed up fishing even further.
+In doing this method, we click on the tree on the same tick as the roll from fishing: on the next tick, **Tick 1**, this makes us interact with the tree when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School, before more ways to set the skilling tick were known.
+
+Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. On the same tick as we attack, our skilling timer gets to set to our weapon attack speed. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action, and we can use it to speed up fishing even further.
 
 <div style="text-align:center"><img src="https://i.imgur.com/95cO4aX.gif" alt="Jamal's 3t fishing with darts" width=500>
 
@@ -212,7 +218,7 @@ In this method, we stop interacting with the fishing spot on **Tick 1** so that 
 
 ### Inventory actions
 
-A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without consuming any items. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. These inventory actions and later eats delay the skilling timer during client input, which makes some of the following methods possible.
+A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without consuming any items. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. In the following examples, notice that the inventory actions we use to delay the skilling timer do so during client input, which makes some of the following methods possible.
 
 An example of 3t skilling with barbarian fishing is below, where we use a knife on a teak log rather than an herb on swamp tar, although these are essentially equivalent from the perspective of the skilling tick.
 
@@ -220,7 +226,7 @@ An example of 3t skilling with barbarian fishing is below, where we use a knife 
 
 Below we describe in text the actions in the clip.
  - **Tick 1**: The skilling timer decrements to -1. During client input, we start making a teak stock, which removes our interaction with the fishing spot, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock.
- - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This deletes the teak stock command from our queue.
+ - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
 This rhythm repeats: notice that on **Tick 1** we crucially interrupted our fishing with a knife-log to set the skilling timer using the knife log rather than the fishing spot. We could have also started interacting with the fishing spot on **Tick 1**.
@@ -235,7 +241,7 @@ Eating most food will add three ticks to the skilling tick. We'll case such food
 
 <div style="text-align:center"><img src="https://i.imgur.com/WayNBjJ.gif" alt='Cut-eat 3t barb fishing' width=500>
 
-This method is mechanically similar to the previous 3t fishing with a knife-log example, with some additions.
+This method is mechanically similar to the previous 3t fishing with a knife-log example, with some additions. Below we describe in text the actions in the clip.
  - **Tick 1**: The skilling timer decrements to -1. During client input, we eat a roe or caviar, which removes our interaction with the fishing spot and adds three to our skilling timer to make it -1+3=2. Later in client input, we process a fish into a roe or caviar. Later in client input, we start interacting with the fishing spot.
  - **Tick 2**: The skilling timer decrements to 1.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
@@ -246,9 +252,9 @@ Some food items, such as karambwans, add two ticks to the skilling tick, rather 
 
 <div style="text-align:center"><img src="https://i.imgur.com/hAIRd8S.gif" alt='2.5t barb fishing' width=500>
 
-Below, we describe the actions shown in clip as text.
+Below we describe in text the actions in the clip.
  - **Tick 1**: The skilling timer decrements to -1. During client input, we start making a teak stock, which removes our interaction with the fishing spot, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock.
- - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This deletes the teak stock command from our queue.
+ - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
  - **Tick 4**: The skilling timer decrements to -1. During client input, we eat a karambwan which sets the skilling timer to -1+2=1. Next in client input, we start interacting with the fishing spot.
  - **Tick 5**: The skilling timer decrements to 0.  During our turn, in interactions with npcs, we get a roll for a fish.
@@ -259,9 +265,9 @@ Here's the method shown for 2.33t willows. The method is called that because we 
 
 <div style="text-align:center"><img src='https://i.imgur.com/Nw2M8ty.gif' src="https://i.imgur.com/dG0kl78.gif" alt="Port Khazard's 2.33t method" width=500>
 
-Below, we describe the actions shown in clip as text.
+Below we describe in text the actions in the clip.
  - **Tick 1**: During client input, we start making a teak stock, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock.
- - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the tree. This deletes the teak stock command from our queue.
+ - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the tree. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with objects, we get a roll for a log.
  - **Tick 4**: The skilling timer decrements to -1. During client input, we eat a karambwan which sets the skilling timer to -1+2=1. Next in client input, we start interacting with the tree.
  - **Tick 5**: The skilling timer decrements to 0.  During our turn, in interactions with objects, we get a roll for a fish.
@@ -300,7 +306,7 @@ The first interaction can have different behavior than later interactions. We sa
 
 In fishing, sometimes when the skilling timer is nonnegative we are forced to stop interacting with the fishing spot after one tick. We saw this during 2t swordfish, where this mechanic made us not need to click off the fishing spot. Barbarian fishing, fly fishing, pike fishing do not have this mechanic at all, while lava eel fishing has a variant of it.
 
-Most new skilling activities in the game unfortunately do not use the skilling tick. In fishing, the examples are Karambwan, infernal eel, minnow, and sacred eel fishing. In mining, examples include mining for runecrafting in Zeah.
+Most new skilling activities in the game unfortunately do not use the skilling tick. In fishing, the examples are karambwan, infernal eel, minnow, and sacred eel fishing. In mining, examples include mining for dense essence blocks in Zeah.
 
 This section has focused on the skilling tick, but there are other "named" ticks which function in much the same way. Particularly prominent examples are the alchemy tick (which several normal spellbook spells use), the eating tick (which control which ticks we can eat non-karambwan food), the karambwan eating tick, the pot sipping tick, and the bone bury tick. For an example of delaying these ticks, note that sipping a potion will block eating, karambwan eating, and potion sipping for three ticks. This is because sipping a potion delays the eating, karambwan eating, and the pot sipping tick. However, a non-karambwan food item will only the eating tick, so karambwans and potions can still be immediately consumed. The reason why karambwans can't be used to 2t at barbarian fishing is, in more detail, because karambwans delay the karambwan eating timer by three ticks, despite delaying the skilling timer by two ticks.
 
@@ -314,7 +320,13 @@ Another example where a stall slows us down is below. However, here, an understa
 
 <div style="text-align:center"><img src="https://i.imgur.com/us896Tz.gif" alt='Interface opening after stall' width=500>
 
-We first process the bank click in client input, which sets the object we're interacting with to be the bank, then we process the spell click in client input, which does the spell action and produces a stall for three ticks. Note, the spell crucially does not remove our interaction. Three ticks later, the stall ends at the beginning of our turn, then the bank interface opens during 'interact with objects/items'. This saves a tick over casting the spell then clicking the bank on the tick the stall ends. Note that clicking the bank a tick before the stall ends will not be processed since the stall ends after client input.
+The spell crucially did not remove our interaction with the bank chest, which saves a tick over just casting the spell then clicking the bank on the tick the stall ends. Below we describe in text the actions in the clip.
+- **Tick 1**: In client input, we start interacting with the bank chest. Next in client input, we cast the superglass make spell, which starts a stall and does not remove our interaction.
+- **Tick 2**:
+- **Tick 3**:
+- **Tick 4**: During our turn, the stall ends. Next during our turn, in interaction with objects, the bank interface opens.
+
+Note that clicking the bank a tick before the stall ends will not be processed since the stall ends after client input.
 
 ### Stalls after movement
 
@@ -324,7 +336,7 @@ This stall can be used to help us by giving up to two rolls on a skilling tick, 
 
 <div style="text-align:center"><img src="https://i.imgur.com/LoHe2Ae.gif" alt='fossil island 1.5t teaks' width=500>
 
-Below, we describe the actions shown in clip as text.
+Below we describe in text the actions in the clip.
  - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock. Next in client input, we path to move, which deletes the teak stock command. During our turn, in movement, we move.
  - **Tick 2**: In client input, we start interacting the tree. During our turn, in interaction with objects, a stall starts.
  - **Tick 3**: During our turn, the stall ends. Later during our turn, in interaction with objects, we get a roll for a log.
@@ -347,7 +359,7 @@ Another example of an unhelpful stall can be found when cooking food besides raw
 
 <div style="text-align:center"><img src="https://i.imgur.com/3netQ5Y.gif" alt='2t cooking' width=500>
 
-Below, we describe the actions shown in clip as text.
+Below we describe in text the actions in the clip.
 - **Tick 1**: In client input, we withdraw a shark from our bank. Next in client input, we start interacting with the stove. During our turn, in interaction with objects, we cook the shark.
 - **Tick 2**: In client input, we start interacting with the bank. During our turn, in interaction with objects, an interface to our bank opens.
 
