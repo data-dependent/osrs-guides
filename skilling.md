@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to data_dependent#3750 or Port Khazard#2280 to chat about the contents of this guide.
+Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to data_dependent#3750 or Port Khazard#2280 to chat about the contents of this guide.
 
 ### Table of Contents
 
@@ -55,7 +55,7 @@ Server tick:
 		# Close interface if trying to log
 ````
 
-At the highest level of complexity, Henke's model asserts that: first, _client input_ is evaluated for each player; second, each nonplayer character, or npc, takes its _turn_ in order of npc ID; last, each player takes its _turn_ in order of player ID, or pid.
+At the highest level of complexity, Henke's model asserts that commands within a tick happen in three ordered groups: client input, then npc turns, then player turns. The npc turns happen in order of npc ID, and the player turns happen in order of player ID, or pid. Below we describe each of these groups and their constituent elements.
 
 ### Client input
 
@@ -69,7 +69,7 @@ At most ten commands will execute in client input during any tick. For example, 
 
 ### NPC And player turns
 
-After client input is processed, all non player characters (or npcs) will take their turns. Following that, all players will take their turns. An immediate consequence of this ordering is that PVMers typically do not have to be mindful of their player ID, whereas PVPers do, since in PVP our enemy could have their turn either before or after ours.
+After all client input is processed, all non player characters (or npcs) will take their turns. Following that, all players will take their turns. An immediate consequence of this ordering is that PVMers typically do not have to be mindful of their player ID, whereas PVPers do. This is since in PVP our enemy could have their turn either before or after ours.
 
 An interesting way to take advantage of the ordering of client input and the turns is through using mithril seeds to attack an npc while the npc is unable to attack back, such as in the clip below. Note that mithril seeds move the player during client input at the same time that the click on them is processed.
 
@@ -81,7 +81,7 @@ Below, we write out the actions that are occurring on the server, in terms of He
  - **Tick 2**: During our client input, we move to underneath KQ via mithril seeds.
  - **Tick 3**: During our character's turn, we pick the flowers.
 
-Our character is never in range of KQ during one of her turns, since her turn on **Tick 1** is before our actions and her turn on **Tick 2** is after our action. 
+Our character is never in range of KQ during one of her turns, since her turn on **Tick 1** is before our actions and her turn on **Tick 2** is after our action. In effect, KQ never even sees us, since she only "looks" during her turn.
 
 ### Elements of turns
 
@@ -129,9 +129,9 @@ During the queue on our turn:
 
 There are three types of commands: weak, normal, and strong. Weak commands get deleted by any actions that interrupts. Since having a strong command in our queue will interrupt us every tick, weak commands get deleted when there is a strong command queued. Note that interfaces also get closed by interruptions, which is written in Henke's model, earlier than the queue. An example of a command being deleted appears often in wintertodt. Most fletches there are weak commands, while the damage is a strong command. Almost all client input also interrupts: a good quick test for whether a command is weak in the queue is whether rearranging items in our inventory deletes it.
 
-We now discuss the use of the queue in skilling. Weak commands are used most commonly in skilling.
+We now discuss the use of the queue in skilling. Weak commands are used most commonly in skilling. 
 
-Skilling actions not based on interactions tend to happen in the queue. For example, making herb tar uses a weak command in our queue: in client input on the tick after we click a low leveled herb onto swamp tar, the skilling tick will be set if the skilling timer is nonpositive, then a command to complete the make on the skilling tick will be placed as a weak command in our queue. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action.
+Skilling actions not based on interactions tend to happen in the queue. For example, making herb tar uses a weak command in our queue. After being afk for some time, if we use tar on an herb, a weak command will be put into our queue to complete the make in three attempts. If we don't do any actions which interrupt, the herb tar will be made. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action.
 
 The queue is also used for repetitive actions in skilling, such as in fletching, potion making, cooking, wintertodt brazier feeding, smithing, and crafting. For most of these, the first action occurs in client input if the first action happens on the tick after the click, then later actions occur from the queue. In all of these examples, the commands are weak.
 
@@ -164,11 +164,11 @@ Interactions are one of the most useful categories for skilling. They're separat
 
 In the first case, we move then interact with the banker in the same tick. In the second case, we move on a tick then interact with the bank booth on the following tick. The same behavior can be seen when moving up to a tree (an object) to woodcut or when moving up to a fishing spot (an npc) to fish.
 
-Interactions can be used to produce an optimal method to cook. It's well known that karambwans can be cooked once per tick; however, it's less widely known that the property of karambwans that makes 1t cooking possible is that raw karambwans can produce more than one cooked product. Since raw beef and raw bear meat share this property, they can also be used to 1t cook. This holds even in f2p where no second option explicitly appears, as shown in the clip below.
+Interactions can be used to produce an optimal method to cook. Below we describe an optimal cooking method which works for any food item which can produce more than one cooked product, such as raw beef, raw karambwan, and raw bear meat. Note, an optimal cooking method for other food is described later in [Stalls in cooking](#stalls-in-cooking).
 
 <div style="text-align:center"><img src="https://i.imgur.com/5JiU7Mp.gif" alt='1t cooking' width=500>
 
-We now describe in text the commands shown in the clip.
+The method works even in f2p where no second option explicitly appears. We now describe in text the commands shown in the clip.
  - **Tick 1**: In client input, we start interacting with the fire. During our turn, in interactions with objects, a choice interface opens.
  - **Tick 2**: In client input, our choice is processed and the cook happens. Later in client input, we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
  - **Tick 3**: In client input, the cook happens according to our choice, and then we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
@@ -191,15 +191,15 @@ While mining, we roll for an ore against any rock that we're interacting with du
 
 <div style="text-align:center"><img src="https://i.imgur.com/AxUdwnW.gif" alt="Bea's mining guild iron" width=500>
 
-Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the skilling timer by two ticks instead of the usual three ticks. We control for this by always moving to another rock after two ticks: when our pickaxe delays our skilling timer by two ticks, this moves us to an undepleted rock to set the skilling tick again; when our pickaxe delays our skilling timer by three ticks, this means we depleted the rock we just moved to, and we then move back to the old rock to set the skilling tick again. We also drop ore in client input before starting to interact with a rock to keep space in our inventory.
+Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the skilling timer by two ticks instead of the usual three ticks. We control for this by _always_ moving to another rock after two ticks. On the next tick, we then move back to the previous rock if it isn't depleted. We also drop ore in client input before starting to interact with a rock to keep space in our inventory.
 
 The skilling tick is just a number, so it doesn't know what kind of action set the skilling tick. In the iron mining example, the skilling tick both got set from an iron rock and was used to mine an iron rock; however, this consistency was not needed. We can also set the skilling tick using one action and then complete a distinct action during the skilling tick. This strategy is behind almost every optimal skilling method in the game. A first example of this is from setting the skilling timer using woodcutting (which is 4 ticks) then completing a barbarian fishing action (which is by default 5 ticks), as shown in the clip below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/FL2K5q7.gif" alt='Tree fishing' width=500>
 
 Below we describe in text the actions in the gif.
--  **Tick 1**: The skilling timer decrements to -1. In client input, we start interacting with the tree. This sets the skilling timer to 3.
--  **Tick 2**: The skilling timer decrements to 2. In client input, we start interacting with the fishing spot.
+-  **Tick 1**: The skilling timer decrements to -1. During client input, we start interacting with the tree. During our turn, we interact with the tree which sets our skilling timer to 3.
+-  **Tick 2**: The skilling timer decrements to 2. During client input, we start interacting with the fishing spot.
 -  **Tick 3**: The skilling timer decrements to 1. 
 -  **Tick 4**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
@@ -237,7 +237,7 @@ The knife-log used above set the skilling timer after the skilling timer had gon
 
 Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition, though. 
 
-Eating most food will add three ticks to the skilling tick. We'll case such food items _3t foods_. For example, if the skilling tick is in the past, eating a 3t food won't necessarily bring the skilling tick into the future; however, when the skilling timer is -1, eating (for example) a roe or caviar moves the skilling timer to 2, which is the same as effect as from a knife-log. Sometimes this is referred to as eating "continuing cycles". An example is shown below.
+Eating most food will add three ticks to the skilling tick. We'll case such food items _3t foods_. For example, if the skilling tick is in the past, eating a 3t food won't necessarily bring the skilling tick into the future; however, when the skilling timer is -1, eating (for example) a roe or caviar moves the skilling timer to 2, which is the same effect as from a knife-log. Sometimes this is referred to as eating "continuing cycles". An example is shown below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/WayNBjJ.gif" alt='Cut-eat 3t barb fishing' width=500>
 
@@ -270,13 +270,13 @@ Below we describe in text the actions in the clip.
  - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the tree. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with objects, we get a roll for a log.
  - **Tick 4**: The skilling timer decrements to -1. During client input, we eat a karambwan which sets the skilling timer to -1+2=1. Next in client input, we start interacting with the tree.
- - **Tick 5**: The skilling timer decrements to 0.  During our turn, in interactions with objects, we get a roll for a fish.
+ - **Tick 5**: The skilling timer decrements to 0.  During our turn, in interactions with objects, we get a roll for a log.
  - **Tick 6**: The skilling timer decrements to -1. During client input, we remove our interaction with the tree.
- - **Tick 7**: The skilling timer decrements to -2. During client input, we start interacting with the tree. Next in client input, we start interacting with the tree. During our turn, in interaction with objects, we get a roll for a log.
+ - **Tick 7**: The skilling timer decrements to -2. During client input, we eat a karambwan which delays our sk illing timer to -2+2=0. Next in client input, we start interacting with the tree. During our turn, in interaction with objects, we get a roll for a log.
 
 ### Flinching
 
-Being attacked can effect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, and our skilling tick is in the past, being attacked will set our skilling tick to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
+Being attacked can affect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, and our skilling tick is in the past, being attacked will set our skilling tick to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
 
 With a 2 tick or 3 tick weapon, being flinched will make the skilling tick be the next tick. While being attacked every other tick, this can make the skilling tick be set to be the next tick every other tick, as shown in the example below.
 
@@ -380,3 +380,15 @@ Another example is the rat setup for 2t swordfish. Below is an optimal strategy 
 <div style="text-align:center"><img src="https://i.imgur.com/G3BlmCc.gif" alt='Rat setup at 2t swordfish' width=500>
 
 We first gets the rats horizontal by running away from the coast then back, careful to walk to the side of the stack on the way back to keep the tile next to us obstructed. Second, we move to the side of the rat line up on the tick after being attacked. This makes the second (farther south) rat attack us two ticks after the first. Third and finally, we take a diagonal step toward the coast to leave undisturbed the rat set up. The diagonal step keeps them undisturbed since they both move to the only tile adjacent to our character that is one tile away from their former position.
+
+## Some problems
+
+Here we put in some fun problems which thinking about can help solidify the previous material.
+
+ 1. In Section I, the first example of Henke's model shown was a clip of attacking KQ without her being table to attack back. Describe the actions in that gif in full detail using Henke's model.
+  2. In free-to-play, an item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
+  3. Continuing from problem 2, what's the best method which can be done when the attacking npc is other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
+  4. In free-to-play, it's not possible to gather snow and move in the same tick. Describe a method with the lowest average number of ticks per roll to mine essence.
+  5. Besides tree fishing, are there any ways to reduce the average number of ticks per roll without items?
+  6. Is it possible to gather two runite ore in one tick?
+  7. Describe a method for 3t swordfish, where there's a roll once every three ticks.
