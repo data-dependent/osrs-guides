@@ -409,11 +409,11 @@ Here we put in some fun problems to help solidify the previous material.
 
    1. In Section I, the first example of Henke's model was the discussion of a clip of attacking KQ without her being table to attack back. Describe the commands in that clip in full detail using Henke's model.
    2. Most of the methods presented were shown with a particular choice of click timing, despite there being other clicks which yield equivalent methods. Which methods have this wiggle room?
-   3. In free-to-play, an item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
-   4. In free-to-play, there are no 2t weapons which players can equip. Describe a method using flinching on a PVP world to mine rune essence with the fewest average ticks per roll. Is this the fastest possible method?
-   5. Continuing from problem 2, what's the best method which can be done when the attacking npc has other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
+   3. In free-to-play, there are no 2t weapons which players can equip. Describe a method using flinching on a PVP world to mine rune essence with the fewest average ticks per roll. Is this the fastest possible method?
+   4. In free-to-play, a ground item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
+   5. Continuing from problem 4, what's the best method when the attacking npc has other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
    6. Tree fishing is an interesting method in part because it doesn't involve any inventory actions or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any inventory actions or attacking?
-   7. After describing cut-eat barbarian fishing, a method was briefly described involving picking up one fish from the ground to cut for more cooking experience. Is it possible to pick up two fish from the ground within the three tick rhythm of the method?
-   8. Describe two distinct methods for 3t swordfish, where there's a roll once every three ticks.
+   7. After describing cut-eat barbarian fishing, an extended method was briefly described involving additionally picking up fish from the ground to cut for more cooking experience. Is it possible to pick up two fish from the ground within the three tick rhythm of the method?
+   8. Describe two distinct methods for 3t swordfish, where there's a roll once every three ticks. At most one method should involve attacking.
    9. Without varrock armour 4 or the mining cape, is it possible to gather two runite ore in one tick?
    10. The method for 2t sharks we presented relied crucially on being adjacent to a bank. Without a bank, is there any way to cook a shark once every two ticks? When next to a bank, which method would you prefer?
