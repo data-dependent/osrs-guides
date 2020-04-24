@@ -228,7 +228,7 @@ Below we describe in text the actions in the clip.
  - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
-This rhythm repeats: notice that on **Tick 1** we crucially interrupted our fishing with a knife-log to set the skilling timer using the knife log rather than the fishing spot. We could have also started interacting with the fishing spot on **Tick 1**.
+This rhythm repeats: notice that on **Tick 1** we crucially interrupted our fishing with a knife-log to set the skilling timer using the knife log rather than the fishing spot.
 
 The knife-log used above set the skilling timer after the skilling timer had gone off. Most actions which can change the skilling tick similarly have this _after the skilling timer has gone off_ condition. One way to make sense of this is through an example: while interacting with a fishing spot every tick, the skilling tick change condition is passed every tick, so to make getting rolls possible, the skilling tick change must only happen _after_ the roll, which occurs on the skilling tick.
 
