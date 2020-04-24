@@ -217,7 +217,7 @@ In this method, we stop interacting with the fishing spot on **Tick 1** so that 
 
 ### Inventory actions
 
-A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without consuming any items. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. In the following examples, notice that the inventory actions we use to delay the skilling timer do so during client input, which makes some of the following methods possible.
+A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without being consumed. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. In the following examples, notice that the inventory actions we use to delay the skilling timer do so during client input, which makes some of the methods possible.
 
 An example of 3t skilling with barbarian fishing is below, where we use a knife on a teak log rather than an herb on swamp tar, although these are essentially equivalent from the perspective of the skilling tick.
 
