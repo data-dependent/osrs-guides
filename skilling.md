@@ -234,9 +234,9 @@ The knife-log used above set the skilling timer after the skilling timer had gon
 
 ### Eating
 
-Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition, though. Eating most food will add three ticks to the skilling tick. We'll case such food items _3t foods_. 
+Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition. In fact, eating most food will add three ticks to the skilling tick, regardless of the value of the skilling timer. We'll case such food items _3t foods_. 
 
-When the skilling timer is positive, we can directly see the effect the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore making eating a 3t food always slow us down by three ticks.
+When the skilling timer is positive, we can directly see the effect of the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore making eating a 3t food always slow us down by three ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/f7ZU5p2.gif" alt="Combat delay from eating" width=500>
 
@@ -259,7 +259,7 @@ Below we describe in text the actions in the clip.
  - **Tick 3**: The skilling timer decrements to 1.
  - **Tick 4**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 3.
 
-When the skilling timer is -1, eating a 3t food such as roe or caviar moves the skilling timer to 2, which is the same effect as from a knife-log. Sometimes this is referred to as eating "continuing cycles". An example is shown below.
+Eating food will bring the skilling tick into the future when the skilling timer is a small enough negative number. For instance, when the skilling timer is -1, eating a 3t food such as roe or caviar moves the skilling timer to 2. Since this is the same effect as from a knife-log, sometimes this is referred to as eating having the ability to "continue cycles". An example is shown below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/WayNBjJ.gif" alt='Cut-eat 3t barb fishing' width=500>
 
