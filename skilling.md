@@ -24,11 +24,12 @@ Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fr
     - [Stalls after movement](#stalls-after-movement)
     - [Stalls on successful rolls](#stalls-on-successful-rolls)
     - [Stalls in cooking](#stalls-in-cooking)
- - [**Movement and pathing**](#tick-manipulation-v-movement-and-pathing)
+<!-- - [**Movement and pathing**](#tick-manipulation-v-movement-and-pathing)-->
+ - [**Some problems**](#some-problems)
 
 ## Tick Manipulation I: Ticks via Henke's Model
 
-The shortest unit of time in Old School Runescape is one game tick, or just _tick_ for short. This means that describing the state of the game for each tick provides a complete and perfect description. While this is true, it's important that the description is read out at the same place during each tick. This is because actions are executed each tick, so the game state incrementally changes as time progresses within a tick. Henke's model provides a powerful framework to understand the order of execution of actions within each tick.
+The shortest unit of time on the Old School Runescape server is one game tick, or just _tick_ for short. This means that describing the state of the game for each tick provides a complete and perfect description. While this is true, it's important that the description is read out at the same place during each tick. This is because actions are executed each tick, so the game state incrementally changes as time progresses within a tick. Henke's model provides a powerful framework to understand the order of execution of actions within each tick.
 
 ````
 Server tick:
@@ -75,8 +76,7 @@ An interesting way to take advantage of the ordering of client input and the tur
 
 <div style="text-align:center"><img src="https://i.imgur.com/7FEB1fG.gif" alt='Mith seed to avoid damage' width=500>
 
-Below, we write out the actions that are occurring on the server, in terms of Henke's model.
-
+Below, we sketch the actions that are occurring on the server, in terms of Henke's model.
  - **Tick 1**: During our character's turn, we both move from under KQ and attack KQ.
  - **Tick 2**: During our client input, we move to underneath KQ via mithril seeds.
  - **Tick 3**: During our character's turn, we pick the flowers.
@@ -85,7 +85,7 @@ Our character is never in range of KQ during one of her turns, since her turn on
 
 ### Elements of turns
 
-Within each turn, the terms which appear (such as 'timer' and 'queue ') are categories of commands, and the ordering of the these categories denotes the ordering of the execution of the corresponding commands within a turn. We will mostly focus here on the player turns, however do notice that this ordering is not the same for npcs and players.
+Within each turn, the terms which appear (such as 'timer' and 'queue ') are categories of commands, and the ordering of the these categories denotes the ordering of the execution of the corresponding commands within a turn. We will mostly focus here on player turns, however do notice that this ordering is not the same for npcs and players.
 
 #### Stalls
 
@@ -141,28 +141,28 @@ During the category timers, commands which are to be executed periodically are e
 
 #### The area queue
 
-The area queue is similar but separate from the queue. It still evaluates on a first in, first out basis, but it only takes in commands related to area effects based on standing on particular tiles. When our character is on certain tiles, called _area tiles_, commands are put into our area queue. Note, when an interface is open, movement is blocked on area tiles: therefore a good test for whether a tile is an area tile is to walk across it with an interface open.
+The area queue is similar but separate from the queue. It still evaluates on a first in, first out basis, but it only takes in commands related to area effects based on being on particular tiles. When our character is on certain tiles, called _area tiles_, commands are put into our area queue. When an interface is open or our character is stalled, movement is blocked when our area queue is not empty: therefore a helpful test for whether a tile is an area tile is to walk across it with an interface open. Note that this test is not sufficient to establish that a tile is an area tile, since walking with an interface open is blocked when some commands are in our queue and by some timers.
 
-A standard example of the area queue can be seen in the wilderness. Overlays such as the wilderness level and multicombat indicators are controlled by the area queue. Below, we see an example of blocking the wilderness level indicator from updating.
+The most common sorts of area tiles, which are also the most easily locatable/identifiable are
+ - map chunk lines (easy to get off google),
+ - multi-combat lines (easy to get off google or check yourself), and
+ - bank-zone borders.
 
-<div style="text-align:center"><img src="https://i.imgur.com/fly1kmc.gif" alt='Teleporting in 31 wildy' width=500>
+An interesting consequence of this for skilling is that some tiles should be avoided when fletching broads, as shown below.
 
-We now describe the actions depicted in the clip.
- - **Tick 1**: During our turn, move from level 31 wilderness to level 30 wilderness
- - **Tick 2**: During client input, glory teleport starts a stall
- - **Tick 3**:
- - **Tick 4**:
- - **Tick 5**: During our turn, the stall ends and our character is in Edgeville
+<div style="text-align:center"><img src="https://i.imgur.com/axwNuLc.gif" alt="Port's skilling area tile example" width=500>
 
-After we left the level 31 wilderness on **Tick 1** but before our area queue ran on **Tick 2**, we teleported and started a stall. This made our overlay never update to level 30.
+The clip below shows a line of area tiles on fossil island which are frequently crossed while hunting the Herbiboar. Starting to fletch on these tiles should be avoided because they prevent movement if you cross over them with an interface open, for as long as the interface is open.
 
 #### Interactions with objects/items and npcs/players
 
-Interactions are one of the most useful categories for skilling. They're separated into two types: interactions with object or items and interactions with npcs or players. In between the two, movement occurs, which has many noticeable consequences in game. One of them is that interaction with a banker (an npc) happens sooner than interaction with a bank booth (an object) when moving up to them, as shown in the clip below.
+Interactions are one of the most useful categories for skilling. They're separated into two types: interactions with object or items and interactions with npcs or players. In between the two, movement occurs, which has many noticeable consequences in game. One of them is that interaction with a banker (an npc) happens sooner than interaction with a bank booth (an object) when moving up to them, as shown in the clips below.
 
-<div style="text-align:center"><img src="https://i.imgur.com/5UBIyFI.gif" alt='Interactions with bank booth/banker' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/WKVnLz9.gif" alt='Interactions with banker' width=500>
 
-In the first case, we move then interact with the banker in the same tick. In the second case, we move on a tick then interact with the bank booth on the following tick. The same behavior can be seen when moving up to a tree (an object) to woodcut or when moving up to a fishing spot (an npc) to fish.
+<div style="text-align:center"><img src="https://i.imgur.com/TsnL1GA.gif" alt='Interactions with bank booth' width=500>
+
+In the first clip, we move then interact with the banker in the same tick. In the second clip, we move on a tick then interact with the bank booth on the following tick. The same behavior can be seen when moving up to a tree (an object) to woodcut or when moving up to a fishing spot (an npc) to fish.
 
 Interactions can be used to produce an optimal method to cook. Below we describe an optimal cooking method which works for any food item which can produce more than one cooked product, such as raw beef, raw karambwan, and raw bear meat. Note, an optimal cooking method for other food is described later in [Stalls in cooking](#stalls-in-cooking).
 
@@ -170,8 +170,8 @@ Interactions can be used to produce an optimal method to cook. Below we describe
 
 The method works even in f2p where no second option explicitly appears. We now describe in text the commands shown in the clip.
  - **Tick 1**: In client input, we start interacting with the fire. During our turn, in interactions with objects, a choice interface opens.
- - **Tick 2**: In client input, our choice is processed and the cook happens. Later in client input, we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
- - **Tick 3**: In client input, the cook happens according to our choice, and then we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
+ - **Tick 2**: In client input, our choice is processed and the cook happens. Next in client input, we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
+ - **Tick 3**: In client input, our choice is processed and the cook happens. Next in client input, we start interacting with the fire again. During our turn, in interactions with objects, a choice interface opens.
 
 Notice that the first raw beef is cooked before the next raw beef begins to be processed. Each tick, we restart interacting with the fire since otherwise later cooks would happen more slowly from our queue.
 
@@ -183,11 +183,11 @@ Sometimes people refer to the skilling tick minus the global tick counter as the
 
 In most skilling examples, which skilling action occurs when the skilling timer goes off is determined through what we're interacting with. We can only interact with one entity (object, item, npc, or player) at a time. 
 
-A first example of the use of the skilling tick can be found in woodcutting, which standardly is a 4 tick action. Let's set the stage: suppose that the global tick counter is 998 and the skilling tick is 900. This means in part that it's been 98 ticks since we've completed our last skilling action. On global tick 998, let's say we click a reachable tree while there's one tile between our character and the tree. Then, on global tick 999, our click is processed in client input where our interaction entity is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. On global tick 1000, during our turn, we interact with the tree, and, since our skilling tick is less than the global tick counter, our skilling tick is set to 1003. (Put differently, this sets the skilling timer to 3, or delays the skilling timer by 4.) On global ticks 1001 and 1002, we interact with the tree during our turn largely with no effect. On global tick 1003, which is the value of the skilling tick, our interaction with the tree during our turn produces a roll. If the roll succeeds, we get a log and there's a possibility of the tree falling.
+A first example of the use of the skilling tick can be found in woodcutting, which standardly is a 4 tick action. Let's set the stage: suppose that the global tick counter is 998 and the skilling tick is 900. This roughly means that 98 ticks have passed since we've completed our last skilling action. On global tick 998, let's say we click a reachable tree while there's one tile between our character and the tree. Then, on global tick 999, our click is processed in client input where our interaction entity is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. On global tick 1000, during our turn, we interact with the tree, and, since our skilling tick is less than the global tick counter, our skilling tick is set to 1003. (Put differently, this sets the skilling timer to 3 or delays the skilling timer by 4.) On global ticks 1001 and 1002, we interact with the tree during our turn largely with no effect. On global tick 1003, which is the value of the skilling tick, our interaction with the tree during our turn produces a roll. If the roll succeeds, we get a log and there's a possibility of the tree falling.
 
 ### Early examples
 
-While mining, we roll for an ore against any rock that we're interacting with during the skilling tick. An immediate consequence of this is that stopping interacting with a rock then restarting interacting with a rock has the same effect as continually interacting with a rock. This can be cleverly used while mining iron in the mining guild to buy an extra tick for reaction time, as shown below.
+While mining, we roll for an ore against any rock that we're interacting with during the skilling tick. This means in part that stopping interacting with a rock then restarting interacting with a rock has the same effect as continually interacting with a rock. While mining iron in the mining guild, we can use this idea to buy an extra tick for reaction time, as shown below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/AxUdwnW.gif" alt="Bea's mining guild iron" width=500>
 
@@ -197,7 +197,7 @@ The skilling tick is just a number, so it doesn't know what kind of action set t
 
 <div style="text-align:center"><img src="https://i.imgur.com/FL2K5q7.gif" alt='Tree fishing' width=500>
 
-Below we describe in text the actions in the gif.
+Below we describe in text the actions in the clip.
 -  **Tick 1**: The skilling timer decrements to -1. During client input, we start interacting with the tree. During our turn, we interact with the tree which sets our skilling timer to 3.
 -  **Tick 2**: The skilling timer decrements to 2. During client input, we start interacting with the fishing spot.
 -  **Tick 3**: The skilling timer decrements to 1. 
@@ -235,20 +235,43 @@ The knife-log used above set the skilling timer after the skilling timer had gon
 
 ### Eating
 
-Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition, though. 
+Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition, though. Eating most food will add three ticks to the skilling tick. We'll case such food items _3t foods_. 
 
-Eating most food will add three ticks to the skilling tick. We'll case such food items _3t foods_. For example, if the skilling tick is in the past, eating a 3t food won't necessarily bring the skilling tick into the future; however, when the skilling timer is -1, eating (for example) a roe or caviar moves the skilling timer to 2, which is the same effect as from a knife-log. Sometimes this is referred to as eating "continuing cycles". An example is shown below.
+When the skilling timer is positive, we can directly see the effect the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore making eating a 3t food always slow us down by three ticks.
+
+<div style="text-align:center"><img src="https://i.imgur.com/f7ZU5p2.gif" alt="Combat delay from eating" width=500>
+
+Below we describe in text the actions in the clip.
+ - **Tick 1**: During our turn, we attack the guard. This sets our skilling timer to 3, due to our 4 tick weapon.
+ - **Tick 2**: The skilling timer decrements to 2.
+ - **Tick 3**: The skilling timer decrements to 1.  During client input, we eat a swordfish, making our skilling timer be 1+3=4.
+ - **Tick 4**: The skilling timer decrements to 3. During client input, we start interacting with the guard.
+ - **Tick 5**: The skilling timer decrements to 2.
+ - **Tick 6**: The skilling timer decrements to 1.
+ - **Tick 7**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard. This sets our skilling timer to 3.
+
+If the skilling tick is in the past, eating a 3t food won't necessarily bring the skilling tick into the future. Therefore, in contrast to eating while attacking, our attacks won't be slowed down if (after being idle) we eat before starting to attack.
+
+<div style="text-align:center"><img src="https://i.imgur.com/87dd8IH.gif" alt='No delay when eating before combat' width=500>
+
+Below we describe in text the actions in the clip.
+ - **Tick 1**: The skilling timer is some large negative number, say -999. During client input, we eat a swordfish, making our skilling timer be -999+3=-996. During client input, we start interacting with the guard. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 3.
+ - **Tick 2**: The skilling timer decrements to 2.
+ - **Tick 3**: The skilling timer decrements to 1.
+ - **Tick 4**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 3.
+
+When the skilling timer is -1, eating a 3t food such as roe or caviar moves the skilling timer to 2, which is the same effect as from a knife-log. Sometimes this is referred to as eating "continuing cycles". An example is shown below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/WayNBjJ.gif" alt='Cut-eat 3t barb fishing' width=500>
 
 This method is mechanically similar to the previous 3t fishing with a knife-log example, with some additions. Below we describe in text the actions in the clip.
- - **Tick 1**: The skilling timer decrements to -1. During client input, we eat a roe or caviar, which removes our interaction with the fishing spot and adds three to our skilling timer to make it -1+3=2. Later in client input, we process a fish into a roe or caviar. Later in client input, we start interacting with the fishing spot.
+ - **Tick 1**: The skilling timer decrements to -1. During client input, we eat a roe or caviar, which removes our interaction with the fishing spot and adds three to our skilling timer to make it -1+3=2. Next in client input, we process a fish into a roe or caviar. Next in client input, we start interacting with the fishing spot.
  - **Tick 2**: The skilling timer decrements to 1.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
 In this version of 3t fishing, on **Tick 1**, we also cut a fish in client input to produce more food to eat and some cooking experience. We also start interacting with the fishing spot on **Tick 1** rather than on **Tick 2**, even though either would work. An interesting variant of this method includes one more action: we pick up a fish on **Tick 1** (by interacting with a ground fish) then start interacting with the fishing spot on **Tick 2**. The result of this is that we have more fish to cut, giving more cooking experience.
 
-Some food items, such as karambwans, add two ticks to the skilling tick, rather than three ticks like most other foods. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. We can't using karambwans to 2t skill since they can only be eaten at most once every three ticks. However, we can use karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in three ticks and a roll in two ticks.
+Some food items add two ticks to the skilling tick rather than three ticks. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. We can't using karambwans to 2t skill since they can only be eaten at most once every three ticks. However, we can use karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in three ticks and a roll in two ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/hAIRd8S.gif" alt='2.5t barb fishing' width=500>
 
@@ -282,7 +305,7 @@ With a 2 tick or 3 tick weapon, being flinched will make the skilling tick be th
 
 <div style="text-align:center"><img src="https://i.imgur.com/BQR6DDl.gif" alt='2t prif teaks' width=500>
 
-This method is 2t teaks, and was the optimal method for woodcutting experience and the pet before Fossil Island introduced a spot which allows for 1.5t teaks. The method involves a two tick rhythm, described in text below.
+This method is 2t teaks, and was the optimal method for woodcutting experience and the pet before fossil island introduced a spot which allows for 1.5t teaks. The method involves a two tick rhythm, described in text below.
  - **Tick 1**: The skilling timer decrements to -1. In client input, we remove our interaction with the tree. During a rabbits turn, it attacks us and puts damage into our queue. During our turn, when our queue evalutes, we recieve the damage, which sets our skilling timer to 1 and makes us start interacting with the rabbit.
  - **Tick 2**: The skilling timer decrements to 0. In client input,  we start interacting with the tree. During our turn, in interactions with objects, we to get a roll a log. 
 
@@ -308,7 +331,7 @@ In fishing, sometimes when the skilling timer is nonnegative we are forced to st
 
 Most new skilling activities in the game unfortunately do not use the skilling tick. In fishing, the examples are karambwan, infernal eel, minnow, and sacred eel fishing. In mining, examples include mining for dense essence blocks in Zeah.
 
-This section has focused on the skilling tick, but there are other "named" ticks which function in much the same way. Particularly prominent examples are the alchemy tick (which several normal spellbook spells use), the eating tick (which control which ticks we can eat non-karambwan food), the karambwan eating tick, the pot sipping tick, and the bone bury tick. For an example of delaying these ticks, note that sipping a potion will block eating, karambwan eating, and potion sipping for three ticks. This is because sipping a potion delays the eating, karambwan eating, and the pot sipping tick. However, a non-karambwan food item will only the eating tick, so karambwans and potions can still be immediately consumed. The reason why karambwans can't be used to 2t at barbarian fishing is, in more detail, because karambwans delay the karambwan eating timer by three ticks, despite delaying the skilling timer by two ticks.
+This section has focused on the skilling tick, but there are other "named" ticks which function in much the same way. Particularly prominent examples are the alchemy tick (which several normal spellbook spells use), the eating tick (which control which ticks we can eat most non-karambwan food), the karambwan eating tick, the pot sipping tick, and the bone bury tick. For an example of delaying these ticks, note that eating a karambwan will block eating, potion sipping, and karambwan eating for three ticks. This is because eating a karambwan delays all of the eating, the pot sipping, and the karambwan eating ticks. However, a typical non-karambwan food item will only delay the eating tick, so karambwans and potions can still be immediately consumed. The reason why karambwans can't be used to 2t at barbarian fishing is, in more detail, because karambwans delay the karambwan eating timer by three ticks, despite delaying the skilling timer by only two ticks.
 
 ## Tick Manipulation III: Stalls
 
@@ -330,22 +353,28 @@ Note that clicking the bank a tick before the stall ends will not be processed s
 
 ### Stalls after movement
 
-Some objects produce a one tick stall before fully executing our interaction with them after moving in the previous tick. For example, changing levels via most ladders in game is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. For example, when afk mining, this stall slows down experience when moving in between rocks: it forces us to take five ticks until a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
+Some objects produce a one tick stall before fully executing our interaction with them after moving in the previous tick. For example, changing levels via most ladders in game is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. For example, when afk mining, this stall slows down experience when moving in between rocks: it forces us to take five ticks until we receive a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
 
-This stall can be used to help us by giving up to two rolls on a skilling tick, rather than just one roll. Below we show a clip of 1.5t teaks on fossil island, which makes use of this stall.
+This stall can be used to help us by providing up to two rolls on a skilling tick, rather than just one roll. Below we show a clip of 1.5t teaks on fossil island, which makes use of this stall.
 
 <div style="text-align:center"><img src="https://i.imgur.com/LoHe2Ae.gif" alt='fossil island 1.5t teaks' width=500>
 
 Below we describe in text the actions in the clip.
  - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock. Next in client input, we path to move, which deletes the teak stock command. During our turn, in movement, we move.
  - **Tick 2**: In client input, we start interacting the tree. During our turn, in interaction with objects, a stall starts.
- - **Tick 3**: During our turn, the stall ends. Later during our turn, in interaction with objects, we get a roll for a log.
+ - **Tick 3**: During our turn, the stall ends. Next during our turn, in interaction with objects, we get a roll for a log.
 
 Significantly, our interaction with the tree was paused when the stall began, so our interaction completes when the stall ends. This finishing of our interaction from **Tick 2** is the source of the additional roll. 
 
-Unfortunately, this method can easily go wrong. If we interact with a tree two ticks after moving rather than one, the stall won't happen and we will lose out on one roll. Further, if we move on the tick after setting the skilling tick with (say) herb tar, we will be stalled when we would have interacted with the tree during the skilling tick, giving no rolls at all.
+Unfortunately, this method can easily go wrong. Below, we consider two examples of common mistakes while attempting to make use of this stall. The [clips](https://streamable.com/xry1fh) are at the essence mine, where each roll is guaranteed to be successful. If our character interacts with the essence rock two ticks after moving rather than one, the stall won't happen and we will lose out on one roll, as seen below.
 
-The same method is commonly done at sandstone and granite in the quarry. There we still can get two rolls, but the second roll only offers us a second chance for when the first roll fails. This is perhaps the only example in game of tick manipulation being used to increase the probability of successfully gathering a resource in a tick.
+<div style="text-align:center"><img src="https://i.imgur.com/RVhTXra.gif" alt="Interacting late during double roll method" width=500>
+
+Further, if we move on the tick _after_ delaying the skilling timer by three, our character will be stalled when they would have interacted with the essence rock during the skilling tick, giving no rolls at all.
+
+<div style="text-align:center"><img src="https://i.imgur.com/WUD8dGj.gif" alt="Moving late during double roll method" width=500>
+
+The same method based on double rolls is commonly done at sandstone and granite in the quarry. There we still can get two rolls, but the second roll only offers us a second chance for when the first roll fails. This is perhaps the only example in game of tick manipulation being used to increase the probability of successfully gathering a resource in a tick.
 
 <div style="text-align:center"><img src="https://i.imgur.com/qTXZQgk.gif" alt='3 tick 4 granite' width=500>
 
@@ -355,40 +384,36 @@ Most mining rocks produce a one tick stall after successfully rolling a resource
 
 ### Stalls in cooking
 
-Another example of an unhelpful stall can be found when cooking food besides raw beef, raw bear meat, and raw karambwans. The 1t cooking method doesn't work for other food items due to a stall which forces the first cook of these raw food items to take four ticks. However, since the stall only appears when there's more than one of the same raw food in our inventory, it's still possible to accelerate cooking these other food items by directly circumventing this problem. Indeed, we can 2t cook by only cooking with one raw food in our inventory at a time, which we show in the clip below.
+Another example of an unhelpful stall can be found when cooking food besides raw beef, raw bear meat, and raw karambwans. The 1t cooking method doesn't work for other food items due to a stall which forces the first cook of these raw food items to take four ticks. 
 
-<div style="text-align:center"><img src="https://i.imgur.com/3netQ5Y.gif" alt='2t cooking' width=500>
+However, since the stall only appears when there's more than one of the same raw food in our inventory, it's still possible to accelerate cooking these other food items by directly circumventing this problem. Indeed, we can cook faster by only cooking with one raw food in our inventory at a time. We now consider two examples of this. First, we consider a case where we can make more raw food using inventory items.
+
+<div style="text-align:center"><img src="https://i.imgur.com/8WfMumW.gif" alt='1t combine-cooking' width=500>
+
+This shows a step involved in cooking for the mess hall in Zeah. Amazingly, we are still able to 1t cook. Below we describe in text the actions in the clip.
+- **Tick 1**: In client input, we combine cheese and incomplete pizza to produce an uncooked pizza in our inventory. Next in client input, we start interacting with the stove. During our turn, in interaction with objects, we cook the pizza..
+
+Second, we consider a case where we need to do some interactions to get more raw food.
+
+<div style="text-align:center"><img src="https://i.imgur.com/3netQ5Y.gif" alt='2t bank cooking' width=500>
 
 Below we describe in text the actions in the clip.
 - **Tick 1**: In client input, we withdraw a shark from our bank. Next in client input, we start interacting with the stove. During our turn, in interaction with objects, we cook the shark.
 - **Tick 2**: In client input, we start interacting with the bank. During our turn, in interaction with objects, an interface to our bank opens.
 
-Every so often, in client input on **Tick 1**, we first deposit our inventory.
-
-## Tick Manipulation IV: Movement and Pathing
-
-There are two major aspects of movement that need to be understood for skilling. The first involves being able to keep track of the position of npcs and players across ticks, and the second involves controlling which tiles are obstructed or not. 
-
-One example is moving the rabbits between trees at prifddinas teaks without disturbing their attack schedule, as shown below.
-
-<div style="text-align:center"><img src="https://i.imgur.com/xbDfTia.gif" alt='Movement from the third tree at prif teaks' width=500>
-
-We first drag the rabbit with lower ID (so whose turn is first) over to the desired tile, then unobstruct the tile by running over it so that the second rabbit can also reach the tile.
-
-Another example is the rat setup for 2t swordfish. Below is an optimal strategy for this.
-
-<div style="text-align:center"><img src="https://i.imgur.com/G3BlmCc.gif" alt='Rat setup at 2t swordfish' width=500>
-
-We first gets the rats horizontal by running away from the coast then back, careful to walk to the side of the stack on the way back to keep the tile next to us obstructed. Second, we move to the side of the rat line up on the tick after being attacked. This makes the second (farther south) rat attack us two ticks after the first. Third and finally, we take a diagonal step toward the coast to leave undisturbed the rat set up. The diagonal step keeps them undisturbed since they both move to the only tile adjacent to our character that is one tile away from their former position.
+Every so often, in client input on **Tick 1**, we first deposit our inventory. Needing to interact to get more raw sharks forces shark cooking to be at least 2 ticks, one tick for interacting with something to get a shark and one tick for interacting with the stove.
 
 ## Some problems
 
-Here we put in some fun problems which thinking about can help solidify the previous material.
+Here we put in some fun problems to help solidify the previous material.
 
- 1. In Section I, the first example of Henke's model shown was a clip of attacking KQ without her being table to attack back. Describe the actions in that gif in full detail using Henke's model.
-  2. In free-to-play, an item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
-  3. Continuing from problem 2, what's the best method which can be done when the attacking npc is other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
-  4. In free-to-play, it's not possible to gather snow and move in the same tick. Describe a method with the lowest average number of ticks per roll to mine essence.
-  5. Besides tree fishing, are there any ways to reduce the average number of ticks per roll without items?
-  6. Is it possible to gather two runite ore in one tick?
-  7. Describe a method for 3t swordfish, where there's a roll once every three ticks.
+   1. In Section I, the first example of Henke's model was the discussion of a clip of attacking KQ without her being table to attack back. Describe the commands in that clip in full detail using Henke's model.
+   2. Most of the methods presented were shown with a particular choice of click timing, despite there being other clicks which yield equivalent methods. Which methods have this wiggle room?
+   3. In free-to-play, an item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
+   4. In free-to-play, there are no 2t weapons which players can equip. Describe a method using flinching on a PVP world to mine rune essence with the fewest average ticks per roll. Is this the fastest possible method?
+   5. Continuing from problem 2, what's the best method which can be done when the attacking npc has other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
+   6. Tree fishing is an interesting method in part because it doesn't involve any inventory actions or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any inventory actions or attacking?
+      7. After describing cut-eat barbarian fishing, a method was briefly described involving picking up one fish from the ground to cut for more cooking experience. Is it possible to pick up two fish from the ground within the three tick rhythm of the method?
+      8. Describe two distinct methods for 3t swordfish, where there's a roll once every three ticks.
+      9. Without varrock armour 4 or the mining cape, is it possible to gather two runite ore in one tick?
+      10. The method for 2t sharks we presented relied crucially on being adjacent to a bank. Without a bank, is there any way to cook a shark once every two ticks? When next to a bank, which method would you prefer?
