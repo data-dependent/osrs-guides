@@ -151,7 +151,7 @@ An interesting consequence of this for skilling is that some tiles should be avo
 
 <div style="text-align:center"><img src="https://i.imgur.com/axwNuLc.gif" alt="Port's skilling area tile example" width=500>
 
-The clip below shows a line of area tiles on fossil island which are frequently crossed while hunting the Herbiboar. Starting to fletch on these tiles should be avoided because they prevent movement if you cross over them with an interface open, for as long as the interface is open.
+The [clip](https://streamable.com/5f1zir) shows a line of area tiles on fossil island which are frequently crossed while hunting the Herbiboar. Starting to fletch on these tiles should be avoided because they prevent movement if you cross over them with an interface open, for as long as the interface is open.
 
 #### Interactions with objects/items and npcs/players
 
@@ -178,7 +178,7 @@ Notice that the first raw beef is cooked before the next raw beef begins to be p
 
 Most tick manipulation in skilling amounts to carefully controlling the so-called skilling tick. There's two relevant variables for this: One is a `global tick counter` that starts at 0 on a server reboot and increments by one every tick before any player's client input and another is a player-specific variable called the `skilling tick` that specifies a value of the global tick counter where a skilling action can occur.
 
-Sometimes people refer to the skilling tick minus the global tick counter as the _skilling timer_, which can be conceptually convenient since it lets us not be explicit about the value of the global tick counter. The skilling timer counts down by one every tick and the skilling action occurs when the skilling timer "goes off" and hits 0. We will refer to the skilling timer most of the times that we mention setting the value of the skilling tick: for convenience, we sometimes write that we are delaying the skilling timer by _k+1_ in place of writing that we are setting the skilling timer to _k_. This is helpful because there are _k+1_ ticks between when the timer is set and when it goes off; for example, harpoon fishing a shark takes 6 ticks, but only sets the skilling timer to 5 on the first interaction. 
+Sometimes people refer to the skilling tick minus the global tick counter as the _skilling timer_, which can be conceptually convenient since it lets us not be explicit about the value of the global tick counter. Note that the skilling timer is unrelated to "timers" in Henke's model. The skilling timer counts down by one every tick and the skilling action occurs when the skilling timer "goes off" and hits 0. We will refer to the skilling timer most of the times that we mention setting the value of the skilling tick: for convenience, we sometimes write that we are delaying the skilling timer by _k+1_ in place of writing that we are setting the skilling timer to _k_. This is helpful because there are _k+1_ ticks between when the timer is set and when it goes off; for example, harpoon fishing a shark takes 6 ticks, but only sets the skilling timer to 5 on the first interaction. 
 
 In most skilling examples, which skilling action occurs when the skilling timer goes off is determined through what we're interacting with. We can only interact with one entity (object, item, npc, or player) at a time. 
 
@@ -369,17 +369,37 @@ Unfortunately, this method can easily go wrong. Below, we consider two examples 
 
 <div style="text-align:center"><img src="https://i.imgur.com/RVhTXra.gif" alt="Interacting late during double roll method" width=500>
 
+Below we describe in text the actions in the clip.
+- **Tick 1**: During client input, we use a knife on a teak log, which sets the skilling timer to 2 and puts a weak command in our queue to make a teak stock. Next during client input, we  set a destination tile, which removes the teak stock command from our queue. During our turn, in movement, we move.
+- **Tick 2**: The skilling timer decrements to 1.
+- **Tick 3**: The skilling timer decrements to 0. During client input, we start interacting with the Rune Essence. During our turn, in interaction with objects, we receive an essence.
+
 Further, if we move on the tick _after_ delaying the skilling timer by three, our character will be stalled when they would have interacted with the essence rock during the skilling tick, giving no rolls at all.
 
 <div style="text-align:center"><img src="https://i.imgur.com/WUD8dGj.gif" alt="Moving late during double roll method" width=500>
 
-The same method based on double rolls is commonly done at sandstone and granite in the quarry. There we still can get two rolls, but the second roll only offers us a second chance for when the first roll fails. This is perhaps the only example in game of tick manipulation being used to increase the probability of successfully gathering a resource in a tick.
+Below we describe in text the actions in the clip.
+- **Tick 1**: During client input, we use a knife on a teak log, which sets the skilling timer to 2 and puts a weak command in our queue to make a teak stock. 
+- **Tick 2**: The skilling timer decrements to 1. During client input, we set a destination tile, which removes the teak stock command from our queue. During our turn, in movement, we move.
+- **Tick 3**: The skilling timer decrements to 0. During client input, we start interacting with the Rune Essence. During our turn, in interaction with objects, a stall starts.
+
+On **Tick 4**, when the stall ends, the skilling timer isn't 0 so we don't receive any rolls.
+
+The same method based on double rolls at 1.5t teaks is also commonly used while mining sandstone and granite in the quarry. There we still can get two rolls, but the second roll only offers us a second chance for when the first roll fails. This is perhaps the only example in game of tick manipulation being used to increase the probability of successfully gathering a resource in a tick.
 
 <div style="text-align:center"><img src="https://i.imgur.com/qTXZQgk.gif" alt='3 tick 4 granite' width=500>
 
 ### Stalls on successful rolls
 
-Most mining rocks produce a one tick stall after successfully rolling a resource. The effects of this are most well known for gem mining, where herb tar is used to produce a resource every four ticks instead of the usual three. Iron, granite, and sandstone do not have this stall. The motherlode mine only has a one tick stall for the first resource gathered per click to interact.
+Most mining rocks produce a one tick stall after successfully rolling a resource. However, iron, granite, and sandstone do not have this stall. Mining pay-dirt at the motherlode mine only has a one tick stall for the first resource gathered per click to interact. The effects of this are most well known for gem mining, where 3t inventory actions are used to produce a resource every four ticks instead of the usual three. 
+
+<div style="text-align:center"><img src="https://i.imgur.com/QfhZkYo.gif" alt='4t gem mining' width=500>
+
+Below we describe in text the actions in the clip. Suppose that the roll we recieved was from the interaction on **Tick 3**, not from the interaction in **Tick 2** which completes when the stall ends.
+- **Tick 1**: During client input, we use a kebbit claw on a d'hide vambrace, which sets the skilling timer to 2 and puts a weak command in our queue to make a kebbit vambrace. Next during client input, we  set a destination tile, which removes the teak stock command from our queue. During our turn, in movement, we move.
+- **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the gem rock. During our turn, in interaction with objects, a stall starts.
+- **Tick 3**: The skilling timer decrements to 0. During our turn, at the beginning, the stall ends and we unsuccessfully roll for a gem. Next during our turn, in interaction with objects, we successfully roll for a gem and a stall starts.
+- **Tick 4**: The skilling timer decrements to -1. During our turn, at the beginning, the stall ends and we receive experience, receive a gem, and the gem rock depletes.
 
 ### Stalls in cooking
 
@@ -390,7 +410,7 @@ However, since the stall only appears when there's more than one of the same raw
 <div style="text-align:center"><img src="https://i.imgur.com/8WfMumW.gif" alt='1t combine-cooking' width=500>
 
 This shows a step involved in cooking for the mess hall in Zeah. Amazingly, we are still able to 1t cook. Below we describe in text the actions in the clip.
-- **Tick 1**: In client input, we combine cheese and incomplete pizza to produce an uncooked pizza in our inventory. Next in client input, we start interacting with the stove. During our turn, in interaction with objects, we cook the pizza..
+- **Tick 1**: In client input, we combine cheese and incomplete pizza to produce an uncooked pizza in our inventory. Next in client input, we start interacting with the stove. During our turn, in interaction with objects, we cook the pizza.
 
 Second, we consider a case where we need to do some interactions to get more raw food.
 
@@ -414,7 +434,9 @@ Here we put in some fun problems to help solidify the previous material.
    6. Tree fishing is an interesting method in part because it doesn't involve any inventory actions or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any inventory actions or attacking?
    7. After describing cut-eat barbarian fishing, an extended method was briefly described involving additionally picking up fish from the ground to cut for more cooking experience. Is it possible to pick up two fish from the ground within the three tick rhythm of the method?
    8. Describe two distinct methods for 3t swordfish, where there's a roll once every three ticks. At most one method should involve attacking.
-   9. Without varrock armour 4 or the mining cape, is it possible to gather two runite ore in one tick?
+   9. Without varrock armour 4 or the mining cape, is it possible to gather two runite ore in one tick while mining a runite rock?
+   10. During 4t gem mining, if moving between rocks every four ticks, explain why failing to recieve a gem at one rock will force the next rock to also not yield a gem.
    10. The method for 2t sharks we presented relied crucially on being adjacent to a bank. Without a bank, is there any way to cook a shark once every two ticks? When next to a bank, which method would you prefer?
+   11. Describe your favorite skilling method using Henke's model.
 
-<!-- SOME POSSIBLE SOLUTIONS:: 3: long bow on rapid, alt attacking every 4 ticks, 4: 2.66t, 5: 2t, 2.25t (flinch alternates between 1t and 2t after last xp drop), 2.5t, 6: addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks, 7: no, the interaction immediately before and on the xp drop tick are used by the fishing spot and so there's only one interaction slot open, 8: 1)we have a 2t or 3t wep and alt has a 3t wep, 2) we click fish spot a tick later than for 3t barb, 9: no, the successful roll stall blocks it, 10: drop cooking, which is worse cuz it takes time to bank and drop -->
+<!-- SOME POSSIBLE SOLUTIONS:: 3: long bow on rapid, alt attacking every 4 ticks, 4: 2.66t, 5: 2t, 3t, 2.5t, 6: addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks, 7: no, the interaction immediately before and on the xp drop tick are used by the fishing spot and so there's only one interaction slot open, 8: 1)we have a 2t or 3t wep and alt has a 3t wep, 2) we click fish spot a tick later than for 3t barb, 9: no, the successful roll stall blocks it, 10: the skilling timer delay on tick 4 (since not stalled when unsuccessful) make it so we're "moving late" like in 3t4g, 11: drop cooking, which is worse cuz it takes time to bank and drop -->
