@@ -435,7 +435,7 @@ Here we put in some fun problems to help solidify the previous material.
    7. After describing cut-eat barbarian fishing, an extended method was briefly described involving additionally picking up fish from the ground to cut for more cooking experience. Is it possible to pick up two fish from the ground within the three tick rhythm of the method?
    8. Describe two distinct methods for 3t swordfish, where there's a roll once every three ticks. At most one method should involve attacking.
    9. Without varrock armour 4 or the mining cape, is it possible to gather two runite ore in one tick while mining a runite rock?
-   10. During 4t gem mining, if moving between rocks every four ticks, explain why failing to recieve a gem at one rock will force the next rock to also not yield a gem.
+   10. During 4t gem mining, if moving between rocks every four ticks, explain why failing to receive a gem at one rock will force the next rock to also not yield a gem. Describe a variant of the method which fixes this problem.
    10. The method for 2t sharks we presented relied crucially on being adjacent to a bank. Without a bank, is there any way to cook a shark once every two ticks? When next to a bank, which method would you prefer?
    11. Describe your favorite skilling method using Henke's model.
 
