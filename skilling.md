@@ -82,11 +82,11 @@ The queue is a driver of much behavior in game. In this section, we'll first foc
 
 A basic example of a queued command is hitsplats. On a turn that a player or npc interacts with an enemy to attack, a command to deal damage is put into the enemy's queue, to be evaluated the next time the enemy has a turn. Notice the asymmetry in this example due to the turn ordering: npcs deal damage to players on the same tick they attack, whereas players deal damage to npcs on the tick after they attack. This can be seen by looking carefully at Henke's model, which we do below.
 
-<div style="text-align:center"><img src="https://i.imgur.com/BRUE6wn.png" alt='NPC attacks player' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/BRUE6wn.png" alt='NPC attacks player' width=300>
 
 In this first image, we consider what happens when the NPC attacks. The attack itself happens during the NPC's turn, and then our character receives the damage during our turn in the queue. 
 
-<div style="text-align:center"><img src="https://i.imgur.com/i3g7kXw.png" alt='Player attacks NPC' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/i3g7kXw.png" alt='Player attacks NPC' width=300>
 
 In this second image, we consider what happens when we attack. Since our turn is late within a tick, when we attack, the NPC's next turn will be on the following tick. Since NPCs also recieve damage during their turn from their queue, the damage appears on the NPC on the next tick.
 
