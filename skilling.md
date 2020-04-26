@@ -8,7 +8,6 @@ Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fr
  - [**Ticks via Henke's model**](#tick-manipulation-i-ticks-via-henkes-model)
     - [Client input](#client-input)
     - [NPC and player turns](#npc-and-player-turns)
-    - [Elements of turns](#elements-of-turns)
        - [Stalls](#stalls)
        - [The queue](#the-queue)
        - [Timers](#timers)
