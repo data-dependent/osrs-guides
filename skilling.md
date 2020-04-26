@@ -80,7 +80,15 @@ When our character is stalled, our client input and our turn is completely block
 
 The queue is a driver of much behavior in game. In this section, we'll first focus on commands unrelated to skilling to initially develop our understanding. Commands in the queue evaluate so that the first that come in are the first that come out. 
 
-A basic example of a queued command is hitsplats. On a turn that a player or npc interacts with an enemy to attack, a command to deal damage is put into the enemy's queue, to be evaluated the next time the enemy has a turn. Notice the asymmetry in this example due to the turn ordering: npcs deal damage to players on the same tick they attack, whereas players deal damage to npcs on the tick after they attack. This can be seen by looking carefully at Henke's model: [this](https://i.imgur.com/BRUE6wn.png) is what happens when the npc attacks, and [this](https://i.imgur.com/i3g7kXw.png) is what happens when the player attacks. Since the player's turn is late within a tick, when the player attacks, the npcs next turn will be on the following tick.
+A basic example of a queued command is hitsplats. On a turn that a player or npc interacts with an enemy to attack, a command to deal damage is put into the enemy's queue, to be evaluated the next time the enemy has a turn. Notice the asymmetry in this example due to the turn ordering: npcs deal damage to players on the same tick they attack, whereas players deal damage to npcs on the tick after they attack. This can be seen by looking carefully at Henke's model, which we do below.
+
+<div style="text-align:center"><img src="https://i.imgur.com/BRUE6wn.png" alt='NPC attacks player' width=500>
+
+In this first image, we consider what happens when the NPC attacks. The attack itself happens during the NPC's turn, and then our character receives the damage during our turn in the queue. 
+
+<div style="text-align:center"><img src="https://i.imgur.com/i3g7kXw.png" alt='Player attacks NPC' width=500>
+
+In this second image, we consider what happens when we attack. Since our turn is late within a tick, when we attack, the NPC's next turn will be on the following tick. Since NPCs also recieve damage during their turn from their queue, the damage appears on the NPC on the next tick.
 
 A clear illustration of the position of the queue as being in our turn is provided by trying to kill ourselves with a locator orb and a zamorak brew. Both of these do damage based on our hitpoints at the moment our click on them is processed; however, zamorak brews do their damage in client input, while locator orbs queue their damage. At 11 hitpoints, if we click on a zamorak brew then a locator orb on the same tick, the following clip happens.
 
