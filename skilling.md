@@ -422,7 +422,7 @@ Here we put in some fun problems to help solidify the previous material.
 
    1. Most of the methods presented were shown with a particular choice of click timing, despite there being other clicks which yield equivalent methods. Which methods have this wiggle room?
    2. Describe your favorite skilling method using Henke's model.
-   3. What's the most number of bones to peaches casts that can be done in 28 ticks?
+   3. What's the most number of times that bones to bananas can be cast in 28 ticks?
    4. In free-to-play, there are no 2t weapons which players can equip. Describe a method on a PVP world using only flinching to mine rune essence with the fewest average ticks per roll. Is this the fastest possible method?
    5. In free-to-play, a ground item (snow) can be used to 3t skill. The best method for woodcutting experience off of PVP worlds involves cutting willows with snow while being attacked by a rat, which has a 4t attack speed. Describe how to combine snow gathering and flinching to produce a method with the lowest average number of ticks per roll.
    6. Continuing from problem 4, what's the best method when the attacking npc has other attack speeds, such as 2 ticks, 3 ticks, or 5 ticks? 
