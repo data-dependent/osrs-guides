@@ -323,7 +323,7 @@ The skilling timer delay can happen either after the action or on the action. Fi
 
 Inventory actions like making herb tar, wood stocks (via knife-logging), kebbit claws, or battlestaves (via celastrus bark) don't complete when we start them on the skilling tick. This is because the check to delay their skilling timer is whether the skilling timer is _nonpositive_. This is unlike fishing, mining, or woodcutting, where the check to delay their skilling timer is whether the skilling timer is _negative_. Another example of unusual behavior can be seen in snow gathering: there, the skilling timer is delayed by three whenever the skilling timer is less than two.
 
-The first interaction can have different behavior than later interactions. We saw this with barbarian fishing, where we cannot get rolls during the first interaction with a fishing spot, even if the first interaction is during the skilling tick. Other examples of this behavior appear at fly fishing, pike fishing, and boulder mining in volcanic mine.
+The first interaction can have different behavior than later interactions. We saw this with barbarian fishing, where we could not get rolls during the first interaction with a fishing spot, even if the first interaction is during the skilling tick. Other examples of this behavior appear at fly fishing, pike fishing, and boulder mining in volcanic mine.
 
 In fishing, sometimes when the skilling timer is nonnegative we are forced to stop interacting with the fishing spot after one tick. We saw this during 2t swordfish, where this mechanic made us not need to click off the fishing spot. Barbarian fishing, fly fishing, pike fishing do not have this mechanic at all, while lava eel fishing has a variant of it.
 
@@ -390,7 +390,9 @@ The same method based on double rolls at 1.5t teaks is also commonly used while 
 
 ### Stalls on successful rolls
 
-Most mining rocks produce a one tick stall after successfully rolling a resource. However, iron, granite, sandstone, and rune essence do not have this stall. Mining pay-dirt at the motherlode mine only has a one tick stall for the first resource gathered per click to interact. The effects of this are most well known for gem mining, where 3t inventory actions are used to produce a resource every four ticks instead of the usual three. 
+Most mining rocks produce a one tick stall after successfully rolling a resource. However, iron, granite, sandstone, limestone, volcanic sulphur, and rune essence do not have this stall. Some rocks which do not deplete only have a one tick stall for the first resource gathered per click to interact; examples include dayaelt, volcanic ash, and pay-dirt mining. 
+
+The effects of this stall are most well known for gem mining, where 3t inventory actions are used to produce a resource roughly every four ticks instead of the usual three. 
 
 <div style="text-align:center"><img src="https://i.imgur.com/QfhZkYo.gif" alt='4t gem mining' width=500>
 
