@@ -1,6 +1,6 @@
 # Trap Resetting
 
-This purpose of this guide is to explain optimal trap resetting in a way that makes clear each  component. The method explained here can be used for any kind of chinchompas, but we will mostly set up five non-adjacent traps as if we were hunting red chinchompas.
+This purpose of this guide is to explain optimal trap resetting in a way that makes clear each  component. The method explained here can be used for any kind of chinchompas.
 
 Trap resetting in chinchompa hunting involves two steps: laying traps and picking up traps. By default, picking up a box trap takes three ticks and laying a box trap takes four ticks. Our character is stalled while we pick up traps, so there's no possible way that we can shorten the pick up duration. However, traps lay on the skilling tick, so we can use usual tick manipulation methods to shorten the lay duration.
 
@@ -45,4 +45,4 @@ When hunting black chinchompas in the wilderness, the same method works. However
 
 While trap resetting in practice, we don't stick to just one of the above methods. We actually use all four of them! Put briefly, we prefer the methods in the reverse order of the sections.
 
-Whenever possible, we 4t trap reset. This means that if there's other traps that need resetting while we are resetting one trap, we immediately reset those too. To reset the first trap, we prefer to use 5t trap resetting. However, when the skilling timer is positive, celastrus bark cannot delay the skilling timer. This makes us have to first pick up the trap to allow our timer to become nonpositive, forcing us to use 6t trap resetting or 7t trap resetting. Put differently, we must use 6t trap resetting or 7t trap resetting over 5t trap resetting when there's fewer than three ticks in between finishing the last reset and starting the next. Further, when adjacent to a trap, we use 6t trap resetting over 7t trap resetting.
+Whenever possible, we 4t trap reset. This means that if there's other traps that need resetting while we are resetting one trap, we immediately reset those too. To reset the first trap, we prefer to use 5t trap resetting. However, when there's fewer than three ticks in between finishing laying the last trap and starting to pick up the next trap, the delaying the skilling timer is not possible. This makes us have to first pick up the trap then later delay our skilling timer, forcing us to use 6t trap resetting or 7t trap resetting. Further, when adjacent to a trap, we use 6t trap resetting over 7t trap resetting.
