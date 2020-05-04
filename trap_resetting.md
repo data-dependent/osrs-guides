@@ -6,7 +6,7 @@ Trap resetting in chinchompa hunting involves two steps: laying traps and pickin
 
 ## 7t trap resetting with herb tar
 
-The clip below shows such a method where we shorten the duration of a trap lay. Some call this method "3t trap resetting" or "3t hunter" because the lay takes three ticks. (Those who do are definitely nerds though.)
+The clip below shows such a method where we shorten the duration of a trap lay. Some call this method "3t trap resetting" or "3t hunter" because the lay takes three ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/A1zzQJ3.gif" alt='trap resetting with herb tar from afar' width=500>
 
