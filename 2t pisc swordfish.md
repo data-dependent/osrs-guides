@@ -60,7 +60,7 @@ This is main part of doing 2t swordfish. Every two ticks, whenever a hitsplat ap
 
 The method works by being flinched for a one tick delay, then interacting with the fishing spot on the skilling tick. Since most fishing spots remove your interaction with them after one tick when the skilling tick isn't in the past, there's no need to click off like in 2t teaks. (Note, most fishing spots have one or two ticks which are exceptions to this that allow for afk fishing.)
 
-The timing to spec without missing ticks is shown in the [clip here](https://streamable.com/4w6el).
+The timing to spec without missing ticks is shown in the [clip here](https://streamable.com/4w6el). On a tick when we would have just interacted a fishing spot, we instead equip the harpoon, spec, and then interact with the fishing spot. On the next tick, we re-equip our 3t weapon, a shortbow.
 
 ## Movement
 
