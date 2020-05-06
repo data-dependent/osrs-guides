@@ -41,6 +41,6 @@ When hunting black chinchompas in the wilderness, the same method works. However
 
 ## Trap resetting while hunting
 
-While trap resetting in practice, we don't stick to just one of the above methods. We actually use all four of them! Put briefly, we prefer the methods in the reverse order of the sections. Here's a [video from Thurco](https://www.youtube.com/watch?v=WvRpOBWF6-c) using the methods.
+While trap resetting in practice, we don't stick to just one of the above methods. We actually use all four of them! Put briefly, we prefer the methods in the reverse order of the sections so that we also do the fastest reset possible. Here's a [video from Thurco](https://www.youtube.com/watch?v=WvRpOBWF6-c) using the methods.
 
 Whenever possible, we 4t trap reset. This means that if there's other traps that need resetting while we are resetting one trap, we immediately reset those too. To reset the first trap, we prefer to use 5t trap resetting. However, when there's fewer than three ticks in between finishing laying the last trap and starting to pick up the next trap, delaying the skilling timer is not possible. This means that we have to first pick up the trap then later delay our skilling timer, forcing us to use 6t trap resetting or 7t trap resetting. Last, when adjacent to a trap, we prefer to use 6t trap resetting over 7t trap resetting.
