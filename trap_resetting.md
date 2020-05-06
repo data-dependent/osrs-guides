@@ -34,7 +34,7 @@ In comparison with 5t trap resetting with celastrus bark, instead of moving then
 
 <div style="text-align:center"><img src="https://i.imgur.com/xVJZOuv.gif" alt='4t resetting nonadjacent traps' width=500>
 
-In the clip, we start off by doing 5t trap resetting. The full method based on this does the following on every fourth tick: lays a trap (which delays the skilling timer) and moves; in the three ticks between laying the traps, we pick up traps. Notice that the traps can be as far apart as we can move in one ticks. A more complete guide to 4t trap resetting can be found in [Fraser's video](https://www.youtube.com/watch?v=CsfJIHGhlwA).
+In the clip, we start off by doing 5t trap resetting. The full method based on this does the following on every fourth tick: lays a trap (which delays the skilling timer) and moves; in the three ticks between laying the traps, we pick up traps. Notice that the traps can be as far apart as we can move in one tick. A more complete guide to 4t trap resetting can be found in [Fraser's video](https://www.youtube.com/watch?v=CsfJIHGhlwA).
 
 When hunting black chinchompas in the wilderness, the same method works. However, we can instead lay a trap and start picking up an adjacent trap on the same tick, and then move immediately after picking up the trap, as shown below
 
