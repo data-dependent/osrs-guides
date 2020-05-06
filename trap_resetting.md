@@ -28,7 +28,9 @@ In this method, we spend five total ticks: one tick to move to the trap, three t
 
 ## 4t trap resetting
 
-The previous methods focused on resetting a single trap. Surprisingly, "momentum" from laying a previous trap can be used to reset a next trap in only four ticks. Using our ability to lay a trap and move on the same tick, we can spend _zero_ ticks on movement after resetting a trap. In comparison with 5t trap resetting with celastrus bark, instead of moving then delaying the skilling timer on a separate tick, we are doing them both on the same tick.
+The previous methods focused on resetting a single trap. Surprisingly, momentum from laying a previous trap can be used to reset a next trap in only four ticks. Using our ability to lay a trap and move on the same tick, we can spend _zero_ ticks on movement after resetting a trap. Some people call this "1t trap resetting" since the trap lays one tick after the pick up or "0t trap resetting" since it's three ticks faster than "3t trap resetting"
+
+In comparison with 5t trap resetting with celastrus bark, instead of moving then delaying the skilling timer on a separate tick, we are doing them both on the same tick.
 
 <div style="text-align:center"><img src="https://i.imgur.com/xVJZOuv.gif" alt='4t resetting nonadjacent traps' width=500>
 
