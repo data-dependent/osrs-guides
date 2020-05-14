@@ -406,7 +406,7 @@ Below we describe in text the actions in the clip. Suppose that the roll we reci
 
 Another example of an unhelpful stall can be found when cooking food besides raw beef, raw bear meat, and raw karambwans. The 1t cooking method doesn't work for other food items due to a stall which forces the first cook of these raw food items to take four ticks. 
 
-However, since the stall only appears when there's more than one of the same raw food in our inventory, it's still possible to accelerate cooking these other food items by directly circumventing this problem. Indeed, we can cook faster by only cooking with one raw food in our inventory at a time. We now consider two examples of this. First, we consider a case where we can make more raw food using inventory items.
+However, since the stall only appears when there's more than one of the same raw food in our inventory, it's still possible to accelerate cooking these other food items by directly circumventing this problem. Indeed, we can cook faster by only cooking with one raw food in our inventory at a time. We now consider two examples of this. First, we consider a case where we can make more raw food using inventory actions.
 
 <div style="text-align:center"><img src="https://i.imgur.com/8WfMumW.gif" alt='1t combine-cooking' width=500>
 
