@@ -227,7 +227,7 @@ This rhythm repeats: notice that on **Tick 1** we crucially interrupted our fish
 
 The knife-log used above set the skilling timer after the skilling timer had gone off. Most actions which can change the skilling tick similarly have this _after the skilling timer has gone off_ condition. One way to make sense of this is through an example: while interacting with a fishing spot every tick, the skilling tick change condition is passed every tick, so to make getting rolls possible, the skilling tick change must only happen _after_ the roll, which occurs on the skilling tick.
 
-### Eating
+#### Eating
 
 Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition. In fact, eating most food will add three ticks to the skilling tick, regardless of the value of the skilling timer. We'll case such food items _3t foods_. 
 
