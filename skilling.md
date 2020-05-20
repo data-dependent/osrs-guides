@@ -16,7 +16,7 @@ Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fr
  - [**The Skilling Tick**](#tick-manipulation-ii-the-skilling-tick)
     - [Early examples](#early-examples)
     - [Inventory actions](#inventory-actions)
-    - [Eating](#eating)
+       - [Eating](#eating)
     - [Flinching](#flinching)
     - [Review of specialized mechanics](#review-of-specialized-mechanics)
  - [**Stalls**](#tick-manipulation-iii-stalls)
