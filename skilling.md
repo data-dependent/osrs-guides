@@ -54,7 +54,7 @@ Server tick:
 		# Close interface if trying to log
 ````
 
-At the highest level of complexity, Henke's model asserts that commands within a tick happen in three ordered groups: client input, then npc turns, then player turns. The npc turns happen in order of npc ID, and the player turns happen in order of player ID, or pid. Below we describe each of these groups and their constituent elements.
+At the highest level of complexity, Henke's model asserts that commands within a tick happen in three ordered groups: client input, then npc turns, then player turns. The npc turns happen in order of npc ID, and the player turns happen in order of player ID, or pid. In the remainder of this section, we describe each of these groups and their constituent elements.
 
 ### Client input
 
@@ -74,7 +74,7 @@ Within each turn, the terms which appear (such as 'timer' and 'queue ') are cate
 
 #### Stalls
 
-When our character is stalled, our client input and our turn is completely blocked: our timers don't go off, our queue doesn't evaluate, we can't interact with anything, we can't move, and no client input is accepted. An example of a stall comes from teleporting. When we click a teleport in the normal spellbook, a stall starts in client input on the next tick. The stall ends four ticks later, when our coordinates change to our destination. We'll see interesting skilling examples of stalls in the [**Stalls**](#tick-manipulation-iii-stalls) section.
+When our character is stalled, our client input and our turn is almost completely blocked: for the most part, our timers don't go off, our queue doesn't evaluate, we can't interact with anything, we can't move, and no client input is accepted. An example of a stall comes from teleporting. When we click a teleport in the normal spellbook, a stall starts in client input on the next tick. The stall ends four ticks later, when our coordinates change to our destination. We'll see interesting skilling examples of stalls in the [**Stalls**](#tick-manipulation-iii-stalls) section.
 
 #### The queue
 
@@ -123,6 +123,21 @@ During the queue on our turn:
 There are three types of commands: weak, normal, and strong. Weak commands get deleted by any actions that interrupts. Since having a strong command in our queue will interrupt us every tick, weak commands get deleted when there is a strong command queued. Note that interfaces also get closed by interruptions. An example of a command being deleted appears often in wintertodt: most fletches there are weak commands, while the damage is a strong command. Almost all client input also interrupts, making a good quick test for whether a command is weak in the queue is whether rearranging items in our inventory deletes it.
 
 Commands in skilling are most commonly weak, because actions not based on interactions tend to happen as weak commands in the queue. For example, making herb tar uses a weak command in our queue. After being afk for some time, if we use tar on an herb, a weak command will be put into our queue to complete the make in three ticks. If we don't do any actions which interrupt, the herb tar will be made. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action. Other examples are most repetitive actions, such as in fletching, potion making, cooking, wintertodt brazier feeding, smithing, and crafting. For most of these, the first action occurs in client input if the first action happens on the tick after the click, then later actions occur from the queue.
+
+Herb picking in farming provides an interesting and rare example of a queued normal command in skilling. Upon a first interaction with an herb spot, a command is added to our normal queue to pick an herb (after a 1t stall). Because normal commands cannot be interrupted like weak commands, this provides a 1t window to do nearly any other action, including restarting interacting with the herb spot.
+
+<div style="text-align:center"><img src="https://i.imgur.com/92uKlfC.gif" alt='1.5t herb picking' width=500>
+
+In the clip, there are two sequences of herb picks happening every 3 ticks. Further relevant herb picking mechanics which will be written in the tick-by-tick description below are that later picks are from weak commands and that there is always a 1t stall between the queued command popping and receiving the herb.
+ - **Tick 1**: During client input, start interacting with herb spot. Then, during the player's turn in interactions, a command to pick (A) is added to normal queue for next tick.
+ - **Tick 2**: During client input, restart interacting with herb spot. During player's turn in queue, a stall starts.
+ - **Tick 3**: During player's turn when stall ends, recieve an herb (A) and weak queue a pick command for 2t. Then, in interactions, a command to pick (B) is added to normal queue for next tick.
+ - **Tick 4**: During player's turn in queue, a stall starts.
+ - **Tick 5**: During player's turn when stall ends, recieve an herb (B) and weak queue a pick command  for 2t. Next, in queue, a stall starts.
+ - **Tick 6**: During player's turn when stalls ends, recieve an herb (A) and weak queue a pick command  for 2t.
+ - **Tick 7**: During player's turn in queue, start a stall.
+ - **Tick 8**: During player's turn when stalls ends, recieve an herb (B) and weak queue a pick command  for 2t. During player's turn in queue, start a stall.
+ - **Tick 9**: During player's turn when stalls ends, recieve an herb (A) and weak queue a pick command  for 2t.
 
 #### Timers
 
@@ -390,7 +405,7 @@ Most mining rocks produce a one tick stall after successfully rolling a resource
 
 The effects of this stall are most well known for gem mining, where 3t inventory actions are used to produce a resource roughly every four ticks instead of the usual three. 
 
-<div style="text-align:center"><img src="https://i.imgur.com/NRD28Fj.gif" alt='4t gem mining' width=500>
+<div style="text-align:center"><img src="https://i.imgur.com/QfhZkYo.gif" alt='4t gem mining' width=500>
 
 Below we describe in text the actions in the clip. Suppose that the roll we recieved was from the interaction on **Tick 3**, not from the interaction in **Tick 2** which completes when the stall ends.
 - **Tick 1**: During client input, we use a kebbit claw on a d'hide vambrace, which sets the skilling timer to 2 and puts a weak command in our queue to make a kebbit vambrace. Next during client input, we  set a destination tile, which removes the teak stock command from our queue. During our turn, in movement, we move.
