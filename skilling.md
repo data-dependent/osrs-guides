@@ -246,28 +246,30 @@ The knife-log used above set the skilling timer after the skilling timer had gon
 
 Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition. In fact, eating most food will add three ticks to the skilling tick, regardless of the value of the skilling timer. We'll case such food items _3t foods_. 
 
-When the skilling timer is positive, we can directly see the effect of the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore making eating a 3t food always slow us down by three ticks.
+When the skilling timer is positive, we can directly see the effect of the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore eating a 3t food always slow us down by three ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/f7ZU5p2.gif" alt="Combat delay from eating" width=500>
 
 Below we describe in text the actions in the clip.
- - **Tick 1**: During our turn, we attack the guard. This sets our skilling timer to 3, due to our 4 tick weapon.
- - **Tick 2**: The skilling timer decrements to 2.
- - **Tick 3**: The skilling timer decrements to 1.  During client input, we eat a swordfish, making our skilling timer be 1+3=4.
- - **Tick 4**: The skilling timer decrements to 3. During client input, we start interacting with the guard.
- - **Tick 5**: The skilling timer decrements to 2.
- - **Tick 6**: The skilling timer decrements to 1.
- - **Tick 7**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard. This sets our skilling timer to 3.
+ - **Tick 1**: During our turn, we attack the guard. This sets our skilling timer to 4, due to our 4 tick weapon.
+ - **Tick 2**: The skilling timer decrements to 3.
+ - **Tick 3**: The skilling timer decrements to 2.  During client input, we eat a swordfish, making our skilling timer be 2+3=5.
+ - **Tick 4**: The skilling timer decrements to 4. During client input, we start interacting with the guard.
+ - **Tick 5**: The skilling timer decrements to 3.
+ - **Tick 6**: The skilling timer decrements to 2.
+ - **Tick 7**: The skilling timer decrements to 1.
+ - **Tick 8**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard. This sets our skilling timer to 4.
 
 If the skilling tick is in the past, eating a 3t food won't necessarily bring the skilling tick into the future. Therefore, in contrast to eating while attacking, our attacks won't be slowed down if (after being idle) we eat before starting to attack.
 
 <div style="text-align:center"><img src="https://i.imgur.com/87dd8IH.gif" alt='No delay when eating before combat' width=500>
 
 Below we describe in text the actions in the clip.
- - **Tick 1**: The skilling timer is some large negative number, say -999. During client input, we eat a swordfish, making our skilling timer be -999+3=-996. During client input, we start interacting with the guard. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 3.
- - **Tick 2**: The skilling timer decrements to 2.
- - **Tick 3**: The skilling timer decrements to 1.
- - **Tick 4**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 3.
+ - **Tick 1**: The skilling timer is some large negative number, say -999. During client input, we eat a swordfish, making our skilling timer be -999+4=-995. During client input, we start interacting with the guard. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 4.
+ - **Tick 2**: The skilling timer decrements to 3.
+ - **Tick 3**: The skilling timer decrements to 2.
+ - **Tick 4**: The skilling timer decrements to 1.
+ - **Tick 5**: The skilling timer decrements to 0. During our turn, in interaction with npcs, we attack the guard, setting our skilling timer to 4.
 
 Eating food will bring the skilling tick into the future when the skilling timer is a small enough negative number. For instance, when the skilling timer is -1, eating a 3t food such as roe or caviar moves the skilling timer to 2. Since this is the same effect as from a knife-log, sometimes this is referred to as eating having the ability to "continue cycles". An example is shown below.
 
@@ -280,7 +282,7 @@ This method is mechanically similar to the previous 3t fishing with a knife-log 
 
 In this version of 3t fishing, on **Tick 1**, we also cut a fish in client input to produce more food to eat and some cooking experience. We also start interacting with the fishing spot on **Tick 1** rather than on **Tick 2**, even though either would work. An interesting variant of this method includes one more action: we pick up a fish on **Tick 1** (by interacting with a ground fish) then start interacting with the fishing spot on **Tick 2**. The result of this is that we have more fish to cut, giving more cooking experience.
 
-Some food items add two ticks to the skilling tick rather than three ticks. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. We can't using karambwans to 2t skill since they can only be eaten at most once every three ticks. However, we can use karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in three ticks and a roll in two ticks.
+Some food items add two ticks to the skilling tick rather than three ticks. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. We can't use karambwans to 2t skill since they can only be eaten at most once every three ticks. However, we can use karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in three ticks and a roll in two ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/hAIRd8S.gif" alt='2.5t barb fishing' width=500>
 
@@ -316,7 +318,7 @@ With a 2 tick or 3 tick weapon, being flinched will make the skilling tick be th
 
 This method is 2t teaks, and was the optimal method for woodcutting experience and the pet before fossil island introduced a spot which allows for 1.5t teaks. The method involves a two tick rhythm, described in text below.
  - **Tick 1**: The skilling timer decrements to -1. In client input, we remove our interaction with the tree. During a rabbits turn, it attacks us and puts damage into our queue. During our turn, when our queue evalutes, we recieve the damage, which sets our skilling timer to 1 and makes us start interacting with the rabbit.
- - **Tick 2**: The skilling timer decrements to 0. In client input,  we start interacting with the tree. During our turn, in interactions with objects, we to get a roll a log. 
+ - **Tick 2**: The skilling timer decrements to 0. In client input,  we start interacting with the tree. During our turn, in interactions with objects, we to get a roll for a log. 
 
 The interaction with the tree at the beginning of **Tick 1** can be removed in a number of ways, including via a no-movement path (as in the clip), log dropping, or dart fletching. Notice that we are at no point interacting with a rabbit during any skilling tick, which keeps us from shooting a dart.
 
