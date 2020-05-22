@@ -306,7 +306,7 @@ Below we describe in text the actions in the clip.
  - **Tick 4**: The skilling timer decrements to -1. During client input, we eat a karambwan which sets the skilling timer to -1+2=1. Next in client input, we start interacting with the tree.
  - **Tick 5**: The skilling timer decrements to 0.  During our turn, in interactions with objects, we get a roll for a log.
  - **Tick 6**: The skilling timer decrements to -1. During client input, we remove our interaction with the tree.
- - **Tick 7**: The skilling timer decrements to -2. During client input, we eat a karambwan which delays our sk illing timer to -2+2=0. Next in client input, we start interacting with the tree. During our turn, in interaction with objects, we get a roll for a log.
+ - **Tick 7**: The skilling timer decrements to -2. During client input, we eat a karambwan which delays our skilling timer to -2+2=0. Next in client input, we start interacting with the tree. During our turn, in interaction with objects, we get a roll for a log.
 
 ### Flinching
 
