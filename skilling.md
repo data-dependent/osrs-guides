@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _vireo (data_dep)#3975_ or _Port Khazard#2280_ to chat about the contents of this guide.
+Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, The Bubbsy, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _vireo (data_dep)#3975_ or _Port Khazard#2280_ to chat about the contents of this guide.
 
 ### Table of Contents
 
@@ -310,13 +310,13 @@ Below we describe in text the actions in the clip.
 
 ### Flinching
 
-Being attacked can affect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, and our skilling tick is in the past, being attacked will set our skilling tick to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
+Being attacked can affect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, we are not moving, and our skilling tick is in the past, being attacked will set our skilling tick to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
 
-With a 2 tick or 3 tick weapon, being flinched will make the skilling tick be the next tick. While being attacked every other tick, this can make the skilling tick be set to be the next tick every other tick, as shown in the example below.
+With a 2 tick or 3 tick weapon, being flinched will set the skilling timer to round(3/2)=round(2/2)=1. While being attacked every other tick, this can make the skilling tick be set to be the next tick every other tick. Below we see a clip for 2t teaks. The method is most commonly done with a 3t weapon with no ammo, but below the method is shown with a 2t weapon capable of attacking.
 
 <div style="text-align:center"><img src="https://i.imgur.com/BQR6DDl.gif" alt='2t prif teaks' width=500>
 
-This method is 2t teaks, and was the optimal method for woodcutting experience and the pet before fossil island introduced a spot which allows for 1.5t teaks. The method involves a two tick rhythm, described in text below.
+The method 2t teaks was optimal for woodcutting experience and the pet before fossil island introduced a spot which allows for 1.5t teaks. The method involves a two tick rhythm, described in text below.
  - **Tick 1**: The skilling timer decrements to -1. In client input, we remove our interaction with the tree. During a rabbits turn, it attacks us and puts damage into our queue. During our turn, when our queue evalutes, we recieve the damage, which sets our skilling timer to 1 and makes us start interacting with the rabbit.
  - **Tick 2**: The skilling timer decrements to 0. In client input,  we start interacting with the tree. During our turn, in interactions with objects, we to get a roll for a log. 
 
@@ -326,7 +326,9 @@ Essentially the same method is also done for swordfish harpooning, as shown belo
 
 <div style="text-align:center"><img src="https://i.imgur.com/5QyQZVc.gif" alt='2t pisc swordfish harpooning' width=500>
 
-Interestingly, in this variant of the method, we don't need to make any clicks to cancel our interaction with the fishing spot. This is because harpoon fishing spots (like most others) force you to stop interacting with them after one tick before the skilling timer has gone off (except for when the skilling timer is 4, which allows for afk fishing). This force stop of our interaction with the fishing spot is the same reason why the rhythm for 3t swordfish fishing is different than the rhythm for 3t barbarian fishing: we still have to start interacting with the fishing spot on the skilling tick.
+Interestingly, in this variant of the method, we don't need to make any clicks to cancel our interaction with the fishing spot. 
+
+This is because harpoon fishing spots (like most others) force you to stop interacting with them after one tick under a few conditions, such as when you start interacting with them before the skilling timer has gone off (except for when the skilling timer is 4, which allows for afk fishing). This force stop of our interaction with the fishing spot is the same reason why the rhythm for 3t swordfish fishing is different than the rhythm for 3t barbarian fishing: we still have to start interacting with the fishing spot on the skilling tick.
 
 ### Review of specialized mechanics
 
