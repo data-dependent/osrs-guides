@@ -440,7 +440,7 @@ Every so often, in client input on **Tick 1**, we first deposit our inventory. N
 
 ## Some problems
 
-This section has problems which can help solidify the concepts presented earlier. The problems are organized in two sections, with the first section having problems which directly use the presented material and the second section having problems which are more exploratory.
+This section has problems which can help solidify the concepts presented earlier. The problems are organized in three sections, with the first section having problems which directly use the presented material, the second section having problems which are more exploratory and require testing mechanics not directly explained in the guide, and the third section having problems which are open-ended.
 
 ### Direct problems
 
@@ -459,10 +459,13 @@ This section has problems which can help solidify the concepts presented earlier
    
 ### Exploratory problems
 
-   12. What's the most number of times that bones to bananas can be cast in 29 ticks? <!-- one per tick, have to pick up and cast in same tick and also drop when needed -->
-   13. Describe trap resetting in chinchompa hunting using Henke's model.
-   14. Tree fishing is an interesting method in part because it doesn't involve any special items or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any special items or attacking? <!-- addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks and dropping chin trap and picking up to start 4t trap resetting and cook eat fishing -->
+   13. What's the most number of times that bones to bananas can be cast in 29 ticks? <!-- one per tick, have to pick up and cast in same tick and also drop when needed -->
+   14. Describe trap resetting in chinchompa hunting using Henke's model.
    15. Is it possible to use a dragon/crystal harpoon spec during 2t swordfish without losing ticks? Is it possible to get a lamp from a genie without losing ticks? (Note, while moving between spots doesn't count.) <!-- Yes, weapon speed doesn't matter when not being hit and then change back happens in client input before being hit, but we cannot talk to genie without losing ticks since that uses up an interaction -->
-   16. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=Jn-vf4RMwww), and [early 2017](https://www.youtube.com/watch?v=XpCMUJzCL0M), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
-   17. Find a way to gather two thatch spar lights 5 ticks apart. Is this the minimum possible ticks between two thatch spar light gathers? <!-- Three ticks after a first roll, eat cake, eat karam, click jungle in same tick. Yes, it's fastest possible since there's a 3t stall after the roll and first interaction can't give rolls -->
-   18. What do you wish would have been presented differently in this guide?
+   16. Find a way to gather two thatch spar lights 5 ticks apart. Is this the minimum possible ticks between two thatch spar light gathers? <!-- Three ticks after a first roll, eat cake, eat karam, click jungle in same tick. Yes, it's fastest possible since there's a 3t stall after the roll and first interaction can't give rolls -->
+
+### Open ended problems
+
+   17. Tree fishing is an interesting method in part because it doesn't involve any special items or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any special items or attacking? <!-- addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks and dropping chin trap and picking up to start 4t trap resetting and cook eat fishing -->
+   18. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=Jn-vf4RMwww), and [early 2017](https://www.youtube.com/watch?v=XpCMUJzCL0M), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
+   19. What do you wish would have been presented differently in this guide?
