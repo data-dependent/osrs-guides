@@ -366,7 +366,7 @@ Note that clicking the bank a tick before the stall ends will not be processed s
 
 ### Stalls after movement
 
-Some objects produce a one tick stall before fully executing our interaction with them after moving in the previous tick. For example, changing levels via most ladders in game is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. For example, when afk mining, this stall slows down experience when moving in between rocks: it forces us to take five ticks until we receive a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
+Some objects stall our character for one tick when we interact with them on the tick after we move. For example, going up or down most ladders in the game after movement is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. For example, when afk mining, this stall slows down experience when moving in between rocks: it forces us to take five ticks until we receive a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
 
 This stall can be used to help us by providing up to two rolls on a skilling tick, rather than just one roll. Below we show a clip of 1.5t teaks on fossil island, which makes use of this stall.
 
