@@ -463,7 +463,7 @@ This section has problems which can help solidify the concepts presented earlier
    13. What's the most number of times that bones to bananas can be cast in 29 ticks? <!-- one per tick, have to pick up and cast in same tick and also drop when needed -->
    14. Describe trap resetting in chinchompa hunting using Henke's model.
    15. Is it possible to use a dragon/crystal harpoon spec during 2t swordfish without losing ticks? Is it possible to get a lamp from a genie without losing ticks? (Note, while moving between spots doesn't count.) <!-- Yes, weapon speed doesn't matter when not being hit and then change back happens in client input before being hit, but we cannot talk to genie without losing ticks since that uses up an interaction -->
-   16. Find a way to gather two thatch spar lights 5 ticks apart. Is this the minimum possible ticks between two thatch spar light gathers? <!-- Three ticks after a first roll, eat cake, eat karam, click jungle in same tick. Yes, it's fastest possible since there's a 3t stall after the roll and first interaction can't give rolls -->
+   16. Find a way to gather two thatch spar lights 5 ticks apart. Is this the minimum possible ticks between two thatch spar light gathers? <!-- Three ticks after a first roll, eat cake, eat karam, click jungle in same tick. Yes, it's fastest possible in game since there's a 3t stall after the roll, the first interaction can't give rolls, and there's no way to get a 4t skilling delay without removing interaction (if there was, 4t would be best possible) -->
 
 ### Open ended problems
 
