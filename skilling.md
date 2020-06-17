@@ -188,10 +188,11 @@ Sometimes people refer to the skilling tick minus the global tick counter as the
 In most skilling examples, which skilling action occurs when the skilling timer goes off is determined through what we're interacting with. We can only interact with one entity (object, item, npc, or player) at a time. 
 
 A first example of the use of the skilling tick can be found in woodcutting, which standardly is a 4 tick action. Let's set the stage: suppose that the global tick counter is 998 and the skilling tick is 900. This roughly means that 98 ticks have passed since we've completed our last skilling action. 
- - On global tick 998, let's say we click a reachable tree while there's one tile between our character and the tree. 
- - Then, on global tick 999, our click is processed in client input where our interaction entity is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. 
+ - On global tick 998, we click a reachable tree while there's one tile between our character and the tree. 
+ - On global tick 999, our click is processed in client input where our interaction entity is set to the tree; later in the tick, during our turn, we move one tile to be adjacent to the tree. 
  - On global tick 1000, during our turn, we interact with the tree, and, since our skilling tick is less than the global tick counter, our skilling tick is set to 1003. (Put differently, this sets the skilling timer to 3 or delays the skilling timer by 4.) 
- - On global ticks 1001 and 1002, we interact with the tree during our turn largely with no effect. 
+ - On global ticks 1001, we interact with the tree during our turn largely with no effect. 
+ - On global ticks 1002, we interact with the tree during our turn largely with no effect. 
  - On global tick 1003, which is the value of the skilling tick, our interaction with the tree during our turn produces a roll. If the roll succeeds, we get a log and there's a possibility of the tree falling.
 
 ### Early examples
@@ -202,7 +203,7 @@ While mining, we roll for an ore against any rock that we're interacting with du
 
 Using a dragon pickaxe and crystal pickaxe provides a chance of delaying the skilling timer by two ticks instead of the usual three ticks. We control for this by _always_ moving to another rock after two ticks. On the next tick, we then move back to the previous rock if it isn't depleted. We also drop ore in client input before starting to interact with a rock to keep space in our inventory.
 
-The skilling tick is just a number, so it doesn't know what kind of action set the skilling tick. In the iron mining example, the skilling tick both got set from an iron rock and was used to mine an iron rock; however, this consistency was not needed. We can also set the skilling tick using one action and then complete a distinct action during the skilling tick. This strategy is behind almost every optimal skilling method in the game. A first example of this is from setting the skilling timer using woodcutting (which is 4 ticks) then completing a barbarian fishing action (which is by default 5 ticks), as shown in the clip below.
+The skilling tick is just a number, so it doesn't know what kind of action set it. In the iron mining example, the skilling tick both got set from an iron rock and was used to mine an iron rock; however, this consistency was not needed. We can also set the skilling tick using one action and then complete a distinct action on the skilling tick. This strategy is behind almost every optimal skilling method in the game. A first example of this is from setting the skilling timer using woodcutting (which is 4 ticks) then completing a barbarian fishing action (which is by default 5 ticks), as shown in the clip below.
 
 <div style="text-align:center"><img src="https://i.imgur.com/FL2K5q7.gif" alt='Tree fishing' width=500>
 
@@ -212,7 +213,7 @@ Below we describe in text the actions in the clip.
 -  **Tick 3**: The skilling timer decrements to 1. 
 -  **Tick 4**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
-In doing this method, we click on the tree on the same tick as the roll from fishing: on the next tick, **Tick 1**, this makes us interact with the tree when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School, before more ways to set the skilling tick were known.
+In doing this method, we click on the tree on the same tick as the roll from fishing: on the next tick, **Tick 1**, this makes us interact with the tree when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School before more ways to set the skilling tick were known.
 
 Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. On the same tick as we attack, our skilling timer gets to set to our weapon attack speed. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action, and we can use it to speed up fishing even further.
 
@@ -244,7 +245,7 @@ The knife-log used above set the skilling timer after the skilling timer had gon
 
 #### Eating
 
-Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition. In fact, eating most food will add three ticks to the skilling tick, regardless of the value of the skilling timer. We'll case such food items _3t foods_. 
+Not all actions which change the skilling tick have this _after the skilling timer has gone off_ condition. In fact, eating most food will add three ticks to the skilling tick, regardless of the value of the skilling timer. We'll call such food items _3t foods_. 
 
 When the skilling timer is positive, we can directly see the effect of the additive delay from eating. While attacking an enemy, our skilling timer will always be nonnegative, therefore eating a 3t food always slow us down by three ticks.
 
