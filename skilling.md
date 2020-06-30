@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, The Bubbsy, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _Port Khazard#2280_ or _vireo (data_dependent)#3975_ to chat about the contents of this guide.
+Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, The Bubbsy, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _Port Khazard#2280_ or _data_dependent#3975_ to chat about the contents of this guide.
 
 ### Table of Contents
 
@@ -123,21 +123,6 @@ During the queue on our turn:
 There are three types of commands: weak, normal, and strong. Weak commands get deleted by any actions that interrupts. Since having a strong command in our queue will interrupt us every tick, weak commands get deleted when there is a strong command queued. Note that interfaces also get closed by interruptions. An example of a command being deleted appears often in wintertodt: most fletches there are weak commands, while the damage is a strong command. Almost all client input also interrupts, making a good quick test for whether a command is weak in the queue is whether rearranging items in our inventory deletes it.
 
 Commands in skilling are most commonly weak, because actions not based on interactions tend to happen as weak commands in the queue. For example, making herb tar uses a weak command in our queue. After being afk for some time, if we use tar on an herb, a weak command will be put into our queue to complete the make in three ticks. If we don't do any actions which interrupt, the herb tar will be made. Recall that we can quickly test that making herb tar is indeed a weak command since rearranging our inventory cancels the action. Other examples are most repetitive actions, such as in fletching, potion making, cooking, wintertodt brazier feeding, smithing, and crafting. For most of these, the first action occurs in client input if the first action happens on the tick after the click, then later actions occur from the queue.
-
-Herb picking in farming provides an interesting and rare example of a queued normal command in skilling. Upon a first interaction with an herb spot, a command is added to our normal queue to pick an herb (after a 1t stall). Because normal commands cannot be interrupted like weak commands, this provides a 1t window to do nearly any other action, including restarting interacting with the herb spot.
-
-<div style="text-align:center"><img src="https://i.imgur.com/92uKlfC.gif" alt='1.5t herb picking' width=500>
-
-In the clip, there are two sequences of herb picks happening every 3 ticks. Further relevant herb picking mechanics which will be written in the tick-by-tick description below are that later picks are from weak commands and that there is always a 1t stall between the queued command popping and receiving the herb.
- - **Tick 1**: During client input, start interacting with herb spot. Then, during the player's turn in interactions, a command to pick (A) is added to normal queue for next tick.
- - **Tick 2**: During client input, restart interacting with herb spot. During player's turn in queue, a stall starts.
- - **Tick 3**: During player's turn when stall ends, recieve an herb (A) and weak queue a pick command for 2t. Then, in interactions, a command to pick (B) is added to normal queue for next tick.
- - **Tick 4**: During player's turn in queue, a stall starts.
- - **Tick 5**: During player's turn when stall ends, recieve an herb (B) and weak queue a pick command  for 2t. Next, in queue, a stall starts.
- - **Tick 6**: During player's turn when stalls ends, recieve an herb (A) and weak queue a pick command  for 2t.
- - **Tick 7**: During player's turn in queue, start a stall.
- - **Tick 8**: During player's turn when stalls ends, recieve an herb (B) and weak queue a pick command  for 2t. During player's turn in queue, start a stall.
- - **Tick 9**: During player's turn when stalls ends, recieve an herb (A) and weak queue a pick command  for 2t.
 
 #### Timers
 
