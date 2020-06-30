@@ -1,7 +1,7 @@
 # A Guide For Tick Manipulation Mechanics In Skilling
 Throughout this guide, we'll introduce skilling mechanics and tick-by-tick descriptions of optimal skilling methods. This text is not intended as a guide to perform one particular method, but rather as a guide to broadly understand skilling. 
 
-Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, The Bubbsy, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _Port Khazard#2280_ or _data_dependent#3975_ to chat about the contents of this guide.
+Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fraser, GeChallengeM, Henke, Illysial, Jamal, Jukebox Romeo, Julia, Nechs, Tannerdino, The Bubbsy, and others for their explanations and helpful discussions. They're always great to chat with, but, in particular, feel free to reach out to _data_dependent#3975_ or _Port Khazard#2280_ to chat about the contents of this guide.
 
 ### Table of Contents
 
@@ -27,7 +27,7 @@ Few of the ideas presented here are due to the writers. Thanks to Bea5, Drew, Fr
 
 ## Tick Manipulation I: Ticks via Henke's Model
 
-The shortest unit of time on the Old School Runescape server is one game tick, or just _tick_ for short. This means that describing the state of the game for each tick provides a complete and perfect description. While this is true, it's important that the description is read out at the same place during each tick. This is because actions are executed each tick, so the game state incrementally changes as time progresses within a tick. Henke's model provides a powerful framework to understand the order of execution of actions within each tick.
+The shortest unit of time on the Old School Runescape server is one game tick, or just _tick_ for short. This means that describing the state of the game for each tick provides a complete and perfect description. While this is true, it's important that the description is read out at the same place during each tick. This is because actions are executed each tick, so the game state incrementally changes as time progresses within a tick. Henke's model provides a powerful framework to understand this order of execution of actions within each tick.
 
 ````
 Server tick:
@@ -200,7 +200,7 @@ Below we describe in text the actions in the clip.
 
 In doing this method, we click on the tree on the same tick as the roll from fishing: on the next tick, **Tick 1**, this makes us interact with the tree when the skilling timer gets delayed. This method, known as _tree fishing_, was optimal near the start of Old School before more ways to set the skilling tick were known.
 
-Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. On the same tick as we attack, our skilling timer gets to set to our weapon attack speed. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action, and we can use it to speed up fishing even further.
+Combat does also use the skilling tick, but it uses the skilling tick in a different way than skills like fishing, mining, and woodcutting. While we are interacting with an npc or player, we attack them whenever the skilling timer is nonpositive. At the same time as we attack, our skilling timer gets to set positive to our weapon attack speed. This behavior is different than in fishing, mining, and woodcutting, where the skilling timer gets set on the tick after the skilling action. Further, we can use it to speed up fishing even further.
 
 <div style="text-align:center"><img src="https://i.imgur.com/95cO4aX.gif" alt="Jamal's 3t fishing with darts" width=500>
 
@@ -213,7 +213,7 @@ In this method, we stop interacting with the fishing spot on **Tick 1** so that 
 
 ### Inventory actions
 
-A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without being consumed. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. In the following examples, notice that the inventory actions we use to delay the skilling timer do so during client input, which makes some of the methods possible.
+A major breakthrough in skilling occurred when the community found inventory items which could delay the skilling timer without being consumed. This was done around the time of the Skilling Cups with the discovery that making herb tar, which takes three ticks with no make-X interface, uses the skilling tick. With this, nearly all of fishing, mining, and woodcutting actions could now be done every three ticks. In the following examples, notice that the inventory actions we use to delay the skilling timer do so during client input, which makes some of the methods possible.
 
 An example of 3t skilling with barbarian fishing is below, where we use a knife on a teak log rather than an herb on swamp tar, although these are essentially equivalent from the perspective of the skilling tick.
 
@@ -224,9 +224,9 @@ Below we describe in text the actions in the clip.
  - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the fishing spot. This interruption deletes the teak stock command from our queue.
  - **Tick 3**: The skilling timer decrements to 0. During our turn, in interactions with npcs, we get a roll for a fish.
 
-This rhythm repeats: notice that on **Tick 1** we crucially interrupted our fishing with a knife-log to set the skilling timer using the knife log rather than the fishing spot.
+This rhythm repeats: notice that on **Tick 1** we crucially removed our interaction with the fishing spot with a knife-log to set the skilling timer using the knife-log.
 
-The knife-log used above set the skilling timer after the skilling timer had gone off. Most actions which can change the skilling tick similarly have this _after the skilling timer has gone off_ condition. One way to make sense of this is through an example: while interacting with a fishing spot every tick, the skilling tick change condition is passed every tick, so to make getting rolls possible, the skilling tick change must only happen _after_ the roll, which occurs on the skilling tick.
+The knife-log used above set the skilling timer after the skilling timer had gone off. Most actions which can change the skilling tick similarly have this _after the skilling timer has gone off_ condition. One way to make sense of this is through an example: while interacting with a fishing spot every tick, the skilling tick change condition is passed every tick. Therefore, to make getting rolls possible, the skilling tick change must only happen _after_ the roll on the skilling tick.
 
 #### Eating
 
@@ -268,7 +268,7 @@ This method is mechanically similar to the previous 3t fishing with a knife-log 
 
 In this version of 3t fishing, on **Tick 1**, we also cut a fish in client input to produce more food to eat and some cooking experience. We also start interacting with the fishing spot on **Tick 1** rather than on **Tick 2**, even though either would work. An interesting variant of this method includes one more action: we pick up a fish on **Tick 1** (by interacting with a ground fish) then start interacting with the fishing spot on **Tick 2**. The result of this is that we have more fish to cut, giving more cooking experience.
 
-Some food items add two ticks to the skilling tick rather than three ticks. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. We can't use karambwans to 2t skill since they can only be eaten at most once every three ticks. However, we can use karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in three ticks and a roll in two ticks.
+Some food items add two ticks to the skilling tick rather than three ticks. A typical example of this kind of food is karambwans. This shorter delay can be used to our advantage to skill faster. Unfortunately, it is impossible to use karambwans to consistently 2t skill since they can only be eaten at most once every three ticks. However, we can use still karambwans to extend 3t fishing into 2.5t fishing, where we alternate between getting a roll in 3 ticks and a roll in 2 ticks.
 
 <div style="text-align:center"><img src="https://i.imgur.com/hAIRd8S.gif" alt='2.5t barb fishing' width=500>
 
@@ -352,18 +352,30 @@ Note that clicking the bank a tick before the stall ends will not be processed s
 
 ### Stalls after movement
 
-Some objects stall our character for one tick when we interact with them on the tick after we move. For example, going up or down most ladders in the game after movement is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. For example, when afk mining, this stall slows down experience when moving in between rocks: it forces us to take five ticks until we receive a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
+Some objects stall our character for one tick when we interact with them on the tick after we move. For example, going up or down most ladders in the game after movement is slowed down by one tick due to this stall. There are primarily two places where this stall appears in skilling: while woodcutting player-farmed trees or mining rocks. 
 
-This stall can be used to help us by providing up to two rolls on a skilling tick, rather than just one roll. Below we show a clip of 1.5t teaks on fossil island, which makes use of this stall.
+For example, when afk mining, this stall slows down experience when moving in between rocks, as we see below. The stall forces us to take five ticks until we receive a roll instead of the usual four ticks (one for movement, three for the skilling timer delay from mining).
 
+<div style="text-align:center"><img src="https://i.imgur.com/0NCMkAy.gif" alt='1t stall from movement' width=500>
+
+Below we describe in text the actions in the clip.
+ - **Tick 1**: In client input, we start interacting with the iron rock and set our destination tile. During our turn, in movement, we move towards the rock.
+ - **Tick 2**: During our turn, in interaction with objects, we interact with the rock to start a 1t stall.
+ - **Tick 3**: (During client input, our click to move is blocked since we're stalled.) During our turn, at the beginning, the stall ends and our skilling timer gets set to 2.
+ - **Tick 4**: Our skilling timer decrements to 1.
+ - **Tick 5**: Our skilling timer decrements to 0. During our turn, in interaction with objects, we recieve an iron ore and the rock depletes.
+
+Notice that the stall paused our interaction with the iron rock and that the interaction continued when the stall ended. Since the skilling timer check is after the stall, our skilling timer is set on Tick 3 rather than when the stall started on Tick 2.
+
+This stall can be used to help us by providing up to two rolls on the skilling tick, rather than just one roll. Below we show a clip of 1.5t teaks on fossil island, which makes use of this stall.
 <div style="text-align:center"><img src="https://i.imgur.com/LoHe2Ae.gif" alt='fossil island 1.5t teaks' width=500>
 
 Below we describe in text the actions in the clip.
  - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock. Next in client input, we path to move, which deletes the teak stock command. During our turn, in movement, we move.
  - **Tick 2**: In client input, we start interacting the tree. During our turn, in interaction with objects, a stall starts.
- - **Tick 3**: During our turn, the stall ends. Next during our turn, in interaction with objects, we get a roll for a log.
+ - **Tick 3**: During our turn, the stall ends and we get a roll for a log. Next during our turn, in interaction with objects, we get a roll for a log.
 
-Significantly, our interaction with the tree was paused when the stall began, so our interaction completes when the stall ends. This finishing of our interaction from **Tick 2** is the source of the additional roll. 
+Significantly again, our interaction with the tree was paused when the stall began, so our interaction completes when the stall ends. This finishing of our interaction from **Tick 2** is the source of the additional roll. 
 
 Unfortunately, this method can easily go wrong. Below, we consider two examples of common mistakes while attempting to make use of this stall. The [clips](https://streamable.com/xry1fh) are at the essence mine, where each roll is guaranteed to be successful. If our character interacts with the essence rock two ticks after moving rather than one, the stall won't happen and we will lose out on one roll, as seen below.
 
