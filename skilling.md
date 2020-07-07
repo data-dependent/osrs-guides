@@ -403,7 +403,7 @@ The same method based on double rolls at 1.5t teaks is also commonly used while 
 
 ### Stalls on successful rolls
 
-Most mining rocks produce a one tick stall after successfully rolling a resource. However, iron, granite, sandstone, limestone, volcanic sulphur, and rune essence do not have this stall. Some rocks which do not deplete only have a one tick stall for the first resource gathered per click to interact; examples include dayaelt, volcanic ash, and pay-dirt mining. 
+Most mining rocks produce a one tick stall after successfully rolling a resource. However, rocks such as iron, granite, sandstone, limestone, volcanic sulphur, and rune/pure essence do not have this stall.
 
 The effects of this stall are most well known for gem mining, where 3t inventory actions are used to produce a resource roughly every four ticks instead of the usual three. 
 
@@ -462,9 +462,10 @@ This section has problems which can help solidify the concepts presented earlier
    15. Describe trap resetting in chinchompa hunting using Henke's model.
    16. Is it possible to use a dragon/crystal harpoon spec during 2t swordfish without losing ticks? Is it possible to get a lamp from a genie without losing ticks? (Note, while moving between spots doesn't count.) <!-- Yes, weapon speed doesn't matter when not being hit and then change back happens in client input before being hit, but we cannot talk to genie without losing ticks since that uses up an interaction -->
    17. Find a way to gather two thatch spar lights 5 ticks apart. Is this the minimum possible ticks between two thatch spar light gathers? <!-- Three ticks after a first roll, eat cake, eat karam, click jungle in same tick. Yes, it's fastest possible in game since there's a 3t stall after the roll, the first interaction can't give rolls, and there's no way to get a 4t skilling delay without removing interaction (if there was, 4t would be best possible) -->
+   18. At motherlode mine, describe why it's possible to receive a gem one tick after a paydirt without any tick manipulation. <!-- it can happen with some rng while using a drag or crystal pick. Rolling a gem goesn't give a 1t stall but rolling a pay dirt does. This means you can T4: stall end (receive pay dirt), interact (set st=1), T5: st=0, interact (get gem) -->
 
 ### Open ended problems
 
-   18. Tree fishing is an interesting method in part because it doesn't involve any special items or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any special items or attacking? <!-- addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks and dropping chin trap and picking up to start 4t trap resetting and cook eat fishing -->
-   19. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=Jn-vf4RMwww), and [early 2017](https://www.youtube.com/watch?v=XpCMUJzCL0M), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
-   20. What do you wish would have been presented differently in this guide?
+   19. Tree fishing is an interesting method in part because it doesn't involve any special items or attacking. Are there any other skilling actions which can have their average number of ticks per roll reduced without any special items or attacking? <!-- addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks and dropping chin trap and picking up to start 4t trap resetting and cook eat fishing -->
+   20. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=Jn-vf4RMwww), and [early 2017](https://www.youtube.com/watch?v=XpCMUJzCL0M), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
+   21. What do you wish would have been presented differently in this guide?
