@@ -296,7 +296,7 @@ Below we describe in text the actions in the clip.
 
 ### Flinching
 
-Being attacked can affect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, we are not moving, and our skilling tick is in the past, being attacked will set our skilling tick to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
+Being attacked can affect the skilling tick. In more detail, while our auto-retaliate is on, we are not interacting with anything, we are not moving, and our skilling tick is in the past, being attacked will set our skilling timer to half of our attack speed, rounded down. This is called being _flinched_. This mechanic was likely designed for use in combat, but it is used in several optimal skilling methods.
 
 With a 2 tick or 3 tick weapon, being flinched will set the skilling timer to round(3/2)=round(2/2)=1. While being attacked every other tick, this can make the skilling tick be set to be the next tick every other tick. Below we see a clip for 2t teaks. The method is most commonly done with a 3t weapon with no ammo, but below the method is shown with a 2t weapon capable of attacking.
 
