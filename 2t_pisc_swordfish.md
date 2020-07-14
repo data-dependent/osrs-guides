@@ -42,6 +42,8 @@ We use the spell Confuse to aggro the rats. Any combat spell could kill the rats
 
 ### Every other ticking the rats
 
+NOTE HYGER HAS FOUND A BETTER METHOD TO DO THIS, WILL UPDATE THE GUIDE LATER. YOU CAN FIND IT IN THE IRON SKILLING METHODS DISCORD.
+
 Ultimately, we want the rats to be attacking us every other tick. To make this possible in a convenient way, we first make the rats horizontal. We run southward away from the coast, then run back in a way that avoids unobstructing the tile that the rat closest to us ends up on.
 
 <div style="text-align:center"><img src="https://i.imgur.com/gHLDgJN.gif" alt='Making the rats horizontal' width=500>
