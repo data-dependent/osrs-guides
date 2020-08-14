@@ -474,5 +474,5 @@ Note, the direct problems in the first section are possible to almost immediatel
 ### Open ended problems
 
    1. Tree fishing is an interesting method in part because it doesn't involve any special items or attacking. Are there any other skilling methods which rely on having an average number of ticks per roll reduced without any special items or attacking? <!-- addy pick 2t ess or teak/mahog 2t and clicking net spot every 5 ticks and dropping chin trap and picking up to start 4t trap resetting and cook eat fishing -->
-   2. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=Jn-vf4RMwww), and [early 2017](https://www.youtube.com/watch?v=XpCMUJzCL0M), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
+   2. In [2014](https://www.youtube.com/watch?v=OjusYIftpZw), [2015](https://www.youtube.com/watch?v=XpCMUJzCL0M), and [early 2017](https://www.youtube.com/watch?v=Jn-vf4RMwww), the skilling community put out videos displaying their best methods. Which mechanics were discovered in between those years? Have any new mechanics been discovered since early 2017?
    3. What do you wish would have been presented differently in this guide? Please feel free to let us know.
