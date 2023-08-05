@@ -372,7 +372,7 @@ This stall can be used to help us by providing up to two rolls on the skilling t
 <div style="text-align:center"><img src="https://i.imgur.com/LoHe2Ae.gif" alt='fossil island 1.5t teaks' width=500>
 
 Below we describe in text the actions in the clip.
- - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make a teak stock. Next in client input, we path to move, which deletes the teak stock command. During our turn, in movement, we move.
+ - **Tick 1**: In client input, we start making herb tar, which removes our interaction with the tree, sets our skilling timer to 2, and puts a weak command in our queue to make herb tar. Next in client input, we path to move, which deletes the herb tar command. During our turn, in movement, we move.
  - **Tick 2**: In client input, we start interacting the tree. During our turn, in interaction with objects, a stall starts.
  - **Tick 3**: During our turn, the stall ends and we get a roll for a log. Next during our turn, in interaction with objects, we get a roll for a log.
 
@@ -411,7 +411,7 @@ The effects of this stall are most well known for gem mining, where 3t inventory
 <div style="text-align:center"><img src="https://i.imgur.com/QfhZkYo.gif" alt='4t gem mining' width=500>
 
 Below we describe in text the actions in the clip. Suppose that the roll we recieved was from the interaction on **Tick 3**, not from the interaction in **Tick 2** which completes when the stall ends.
-- **Tick 1**: During client input, we use a kebbit claw on a d'hide vambrace, which sets the skilling timer to 2 and puts a weak command in our queue to make a kebbit vambrace. Next during client input, we  set a destination tile, which removes the teak stock command from our queue. During our turn, in movement, we move.
+- **Tick 1**: During client input, we use a kebbit claw on a d'hide vambrace, which sets the skilling timer to 2 and puts a weak command in our queue to make a kebbit vambrace. Next during client input, we set a destination tile, which removes the vambrace command from our queue. During our turn, in movement, we move.
 - **Tick 2**: The skilling timer decrements to 1. During client input, we start interacting with the gem rock. During our turn, in interaction with objects, a stall starts.
 - **Tick 3**: The skilling timer decrements to 0. During our turn, at the beginning, the stall ends and we unsuccessfully roll for a gem. Next during our turn, in interaction with objects, we successfully roll for a gem and a stall starts.
 - **Tick 4**: The skilling timer decrements to -1. During our turn, at the beginning, the stall ends and we receive experience, receive a gem, and the gem rock depletes.
