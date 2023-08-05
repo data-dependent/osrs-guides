@@ -346,7 +346,8 @@ The spell crucially did not remove our interaction with the bank chest, which sa
 - **Tick 1**: In client input, we start interacting with the bank chest. Next in client input, we cast the superglass make spell, which starts a stall and does not remove our interaction.
 - **Tick 2**:
 - **Tick 3**:
-- **Tick 4**: During our turn, the stall ends. Next during our turn, in interaction with objects, the bank interface opens.
+- **Tick 4**:
+- **Tick 5**: During our turn, the stall ends. Next during our turn, in interaction with objects, the bank interface opens.
 
 Note that clicking the bank a tick before the stall ends will not be processed since the stall ends after client input.
 
